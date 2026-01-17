@@ -524,6 +524,91 @@
             50% { background: color-mix(in srgb, var(--color-danger) 30%, var(--bg-primary)); }
             100% { background: var(--bg-primary); }
         }
+        
+/* ========================================
+   ROTACIÓN AUTOMÁTICA DE PANTALLA
+   ======================================== */
+
+/* MODO HORIZONTAL (LANDSCAPE) */
+@media (orientation: landscape) {
+    .container {
+        max-width: 100vw;
+        padding: 5px;
+    }
+    
+    .titulo-principal {
+        font-size: clamp(1.5rem, 5vw, 3rem);
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    
+    /* Layout en 2 columnas para horizontal */
+    .contenido-principal {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        align-items: start;
+    }
+    
+    /* Hélices en 2x2 en horizontal */
+    .helicopteros-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    /* Botones más compactos */
+    .botones-accion {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .boton-accion {
+        padding: 15px 10px;
+        font-size: 0.9rem;
+    }
+    
+    /* Paneles más compactos */
+    .panel-control, 
+    .panel-estado {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+/* PANTALLAS MUY BAJAS (móviles horizontales pequeños) */
+@media (orientation: landscape) and (max-height: 500px) {
+    .titulo-principal {
+        font-size: 1.5rem;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .boton-accion {
+        padding: 12px 8px;
+        font-size: 0.8rem;
+    }
+    
+    .helicoptero {
+        padding: 12px;
+    }
+    
+    .helice {
+        font-size: 2.5rem;
+    }
+}
+
+/* MODO VERTICAL (PORTRAIT) - Mantener como está */
+@media (orientation: portrait) {
+    .contenido-principal {
+        display: block;
+    }
+    
+    .helicopteros-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+</style>
     </style>
 </head>
 <body class="tema-noche">
@@ -1393,3 +1478,4 @@
     </script>
 </body>
 </html>
+

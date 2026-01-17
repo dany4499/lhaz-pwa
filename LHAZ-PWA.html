@@ -1,0 +1,1395 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🚁 LHAZ - Sistema Sorteo Hélices PWA</title>
+    
+    <!-- PWA META TAGS -->
+    <meta name="description" content="Sistema profesional de sorteo de hélices LHAZ para dispositivos móviles">
+    <meta name="theme-color" content="#FFD700">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LHAZ">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ICONOS PWA -->
+    <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiMwMDAwMDAiIHJ4PSIyNCIvPjx0ZXh0IHg9Ijk2IiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0ZGRDcwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TEhBWjwvdGV4dD48L3N2Zz4=">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiMwMDAwMDAiIHJ4PSIyNCIvPjx0ZXh0IHg9Ijk2IiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0ZGRDcwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TEhBWjwvdGV4dD48L3N2Zz4=">
+    
+    <!-- MANIFEST PWA -->
+    <link rel="manifest" id="manifest-link">
+
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ========== VARIABLES PWA ========== */
+        .tema-noche {
+            --bg-primary: linear-gradient(135deg, #000, #1a1a1a);
+            --bg-secondary: #2a2a2a;
+            --bg-tertiario: #1a1a1a;
+            --color-texto: white;
+            --color-borde: #666;
+            --color-accent: #FFD700;
+            --color-success: #00FF00;
+            --color-warning: #FF9900;
+            --color-danger: #FF0000;
+            --color-info: #00CCFF;
+        }
+
+        .tema-dia {
+            --bg-primary: linear-gradient(135deg, #f0f8ff, #e6f3ff);
+            --bg-secondary: #ffffff;
+            --bg-tertiario: #f5f5f5;
+            --color-texto: #2c3e50;
+            --color-borde: #bdc3c7;
+            --color-accent: #f39c12;
+            --color-success: #27ae60;
+            --color-warning: #e67e22;
+            --color-danger: #e74c3c;
+            --color-info: #3498db;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--color-texto);
+            min-height: 100vh;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.5s ease;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            touch-action: manipulation;
+        }
+
+        /* ========== BANNER INSTALACIÓN MEJORADO ========== */
+        .install-banner {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: black;
+            padding: 15px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            border: 2px solid #FFA500;
+            font-size: 14px;
+            animation: 
+                aparecer-banner 1s ease-out,
+                pulso-atencion 2s ease-in-out 5s infinite;
+        }
+
+        @keyframes aparecer-banner {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulso-atencion {
+            0%, 90% { transform: scale(1); }
+            95% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        .install-banner:hover, .install-banner:active {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+        }
+
+        .install-banner.instalada {
+            background: linear-gradient(135deg, #00FF00, #00CC00);
+            color: white;
+        }
+
+        /* ========== TÍTULO LHAZ MÓVIL ========== */
+        .titulo-principal {
+            text-align: center;
+            margin: 10px 0 20px 0;
+            font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+            font-weight: 900;
+            font-size: 4rem;
+            line-height: 1;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            position: relative;
+            padding: 20px 10px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+        }
+
+        .titulo-principal .texto-lhaz {
+            color: #FFFFFF;
+            text-shadow: 
+                -3px -3px 0px #000000,
+                3px -3px 0px #000000,
+                -3px 3px 0px #000000,
+                3px 3px 0px #000000,
+                0px -3px 0px #000000,
+                0px 3px 0px #000000,
+                -3px 0px 0px #000000,
+                3px 0px 0px #000000,
+                0 0 15px #FFD700,
+                0 0 30px #FFD700;
+            
+            position: relative;
+            display: inline-block;
+            -webkit-text-fill-color: #FFFFFF;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1)) contrast(2) brightness(1.3);
+            animation: pulso-titulo 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulso-titulo {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.02); }
+        }
+
+        /* ========== COMPONENTES MÓVIL ========== */
+        .cabecera {
+            display: flex;
+            justify-content: space-between;
+            background: var(--bg-secondary);
+            border: 2px solid var(--color-borde);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .btn-tiro, .btn-circular {
+            background: var(--bg-tertiario);
+            border: 2px solid var(--color-borde);
+            color: var(--color-texto);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+        }
+
+        .btn-tiro {
+            padding: 8px 12px;
+            margin: 0 3px;
+            font-size: 14px;
+            min-width: 40px;
+        }
+
+        .btn-circular {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .btn-tiro.activo { 
+            background: var(--color-accent); 
+            color: var(--bg-tertiario); 
+        }
+
+        .btn-tiro:hover, .btn-tiro:active, 
+        .btn-circular:hover, .btn-circular:active { 
+            transform: scale(1.05); 
+        }
+
+        .panel-estado {
+            background: var(--bg-secondary);
+            border: 2px solid var(--color-borde);
+            padding: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-radius: 10px;
+        }
+
+        /* ========== GRILLA HÉLICES ========== */
+        .grilla-helices {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 15px auto;
+            max-width: 100%;
+        }
+
+        .helice-item {
+            aspect-ratio: 1;
+            background: var(--bg-tertiario);
+            border: 2px solid var(--color-borde);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            min-height: 70px;
+        }
+
+        .helice-item:hover, .helice-item:active { 
+            transform: scale(1.05); 
+        }
+
+        .helice-item.inicial { background: var(--bg-tertiario); }
+        .helice-item.encendida {
+            border-color: var(--color-success);
+            background: color-mix(in srgb, var(--color-success) 20%, var(--bg-tertiario));
+        }
+        .helice-item.eliminada { opacity: 0.4; cursor: not-allowed; }
+        .helice-item.excluida { 
+            border-color: var(--color-warning); 
+            opacity: 0.7; 
+            background: color-mix(in srgb, var(--color-warning) 20%, var(--bg-tertiario));
+        }
+        .helice-item.secuencia-actual { 
+            border-color: #FF6600; 
+            animation: destaque-mobile 0.5s ease-in-out infinite alternate;
+        }
+        .helice-item.disparando {
+            border-color: #FF0000;
+            animation: efecto-disparo-mobile 1.5s ease-out;
+        }
+        .helice-item.recuperando {
+            border-color: #0088FF;
+            animation: efecto-recupero-mobile 1s ease-out;
+        }
+
+        @keyframes destaque-mobile {
+            from { box-shadow: 0 0 10px rgba(255, 102, 0, 0.7); }
+            to { box-shadow: 0 0 20px rgba(255, 102, 0, 0.9); }
+        }
+
+        @keyframes efecto-disparo-mobile {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px rgba(255, 0, 0, 1); }
+            100% { transform: scale(0.95); box-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
+        }
+
+        @keyframes efecto-recupero-mobile {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .numero-helice {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            color: var(--color-accent);
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .aspas {
+            width: 45px;
+            height: 45px;
+            position: relative;
+        }
+
+        .aspas.girando { 
+            animation: rotar 0.08s linear infinite; 
+        }
+
+        @keyframes rotar { 
+            from { transform: rotate(0deg); } 
+            to { transform: rotate(360deg); } 
+        }
+
+        .aspa {
+            position: absolute;
+            background: var(--color-accent);
+            border-radius: 2px;
+        }
+
+        .aspa:nth-child(1) { 
+            top: 50%; left: 10%; width: 80%; height: 3px; 
+            transform: translateY(-50%); 
+        }
+
+        .aspa:nth-child(2) { 
+            top: 10%; left: 50%; width: 3px; height: 80%; 
+            transform: translateX(-50%); 
+        }
+
+        .rpm-display {
+            position: absolute;
+            bottom: 1px;
+            font-size: 7px;
+            color: var(--color-texto);
+            opacity: 0.7;
+        }
+
+        /* ========== CONTROLES ========== */
+        .controles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-control {
+            background: var(--bg-tertiario);
+            border: 2px solid var(--color-borde);
+            color: var(--color-texto);
+            padding: 12px 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-control:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-sortear { border-color: #FFD700; }
+        .btn-sortear:hover:not(:disabled), .btn-sortear:active:not(:disabled) { 
+            background: #FFD700; color: black; transform: scale(1.02); 
+        }
+
+        .btn-disparar { border-color: #FF6600; }
+        .btn-disparar.listo { 
+            border-color: #FF0000; 
+            animation: pulso-disparar 1s ease-in-out infinite alternate;
+        }
+
+        .btn-recupero { border-color: #0088FF; }
+        .btn-recupero.disponible {
+            animation: pulso-recupero 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulso-disparar {
+            from { box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); }
+            to { box-shadow: 0 0 20px rgba(255, 0, 0, 0.9); }
+        }
+
+        @keyframes pulso-recupero {
+            from { box-shadow: 0 0 10px rgba(0, 136, 255, 0.6); }
+            to { box-shadow: 0 0 20px rgba(0, 136, 255, 0.8); }
+        }
+
+        /* ========== INFO Y SECUENCIA ========== */
+        .info-ultima { 
+            background: var(--bg-secondary); 
+            border: 2px solid var(--color-borde); 
+            padding: 8px; 
+            margin-bottom: 15px; 
+            text-align: center; 
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .info-ultima.disponible {
+            border-color: #0088FF;
+            background: color-mix(in srgb, var(--color-info) 20%, var(--bg-secondary));
+            box-shadow: 0 0 15px rgba(0, 136, 255, 0.4);
+        }
+
+        .indicador-secuencia { 
+            background: color-mix(in srgb, var(--color-info) 20%, var(--bg-secondary));
+            border: 2px solid var(--color-info); 
+            padding: 10px; 
+            text-align: center; 
+            margin-bottom: 15px; 
+            display: none; 
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .indicador-secuencia.activo { display: block; }
+
+        /* ========== PANELES ========== */
+        .panel-rpm, .panel-audio {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-secondary);
+            border: 3px solid var(--color-accent);
+            border-radius: 15px;
+            padding: 20px;
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+            display: none;
+            transition: all 0.5s ease;
+        }
+
+        .panel-rpm.activo, .panel-audio.activo { display: block; }
+
+        .rpm-control, .audio-control {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .rpm-slider {
+            width: 50%;
+            height: 4px;
+            background: #333;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .audio-btn {
+            background: var(--bg-tertiario);
+            border: 2px solid #00FF00;
+            color: #00FF00;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        .audio-btn:hover, .audio-btn.activo { background: #00FF00; color: black; }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.activo { display: block; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 480px) {
+            .titulo-principal { font-size: 3rem; margin-bottom: 15px; padding: 15px 8px; }
+            .grilla-helices { gap: 6px; }
+            .aspas { width: 35px; height: 35px; }
+            .btn-control { font-size: 11px; padding: 10px 6px; }
+            .panel-estado { font-size: 11px; }
+        }
+
+        @media (max-width: 320px) {
+            .titulo-principal { font-size: 2.5rem; padding: 12px 5px; }
+            .aspas { width: 30px; height: 30px; }
+            .numero-helice { font-size: 8px; }
+        }
+
+        @media (orientation: landscape) and (min-width: 768px) {
+            .controles { grid-template-columns: repeat(4, 1fr); }
+            .grilla-helices { max-width: 600px; gap: 12px; }
+            .aspas { width: 60px; height: 60px; }
+        }
+
+        /* ========== TEMA DÍA ========== */
+        .tema-dia .titulo-principal {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #f39c12;
+            box-shadow: 0 0 30px rgba(243, 156, 18, 0.6);
+        }
+
+        .tema-dia .titulo-principal .texto-lhaz {
+            color: #000000;
+            text-shadow: 
+                -3px -3px 0px #FFFFFF, 3px -3px 0px #FFFFFF,
+                -3px 3px 0px #FFFFFF, 3px 3px 0px #FFFFFF,
+                0px -3px 0px #FFFFFF, 0px 3px 0px #FFFFFF,
+                -3px 0px 0px #FFFFFF, 3px 0px 0px #FFFFFF,
+                0 0 15px #f39c12, 0 0 30px #f39c12;
+        }
+
+        .countdown-urgente {
+            animation: parpadeo-urgente 0.5s ease-in-out;
+        }
+
+        @keyframes parpadeo-urgente {
+            0% { background: var(--bg-primary); }
+            50% { background: color-mix(in srgb, var(--color-danger) 30%, var(--bg-primary)); }
+            100% { background: var(--bg-primary); }
+        }
+    </style>
+</head>
+<body class="tema-noche">
+    <!-- BANNER INSTALACIÓN PWA SIEMPRE VISIBLE -->
+    <div class="install-banner" id="installBanner" onclick="instalarApp()">
+        📱 ¡Instalar LHAZ como App! - Toca aquí para descargar ✨
+    </div>
+
+    <div class="overlay" id="overlay" onclick="cerrarPaneles()"></div>
+
+    <!-- TÍTULO LHAZ MÓVIL -->
+    <div class="titulo-principal">
+        <div class="texto-lhaz">LHAZ</div>
+    </div>
+
+    <div class="cabecera">
+        <div>
+            <span style="color: var(--color-accent); font-weight: bold; margin-right: 8px; font-size: 12px;">Tiros:</span>
+            <button class="btn-tiro" onclick="seleccionarTiros(2)">2</button>
+            <button class="btn-tiro activo" onclick="seleccionarTiros(3)">3</button>
+            <button class="btn-tiro" onclick="seleccionarTiros(5)">5</button>
+        </div>
+        <div>
+            <button class="btn-circular" onclick="toggleTema()" id="btnTema" title="Tema">🌙</button>
+            <button class="btn-circular" onclick="abrirPanelRPM()" title="RPM">⚙️</button>
+            <button class="btn-circular" id="btnAudio" onclick="abrirPanelAudio()" title="Audio">🎤</button>
+        </div>
+    </div>
+
+    <div class="panel-estado">
+        <div id="estadoPrincipal" style="color: var(--color-accent); font-weight: bold;">Sistema listo - Presiona SORTEAR para iniciar tiro 1/3</div>
+        <div id="tirosRestantes" style="color: var(--color-info);">Tiros Restantes: 3</div>
+    </div>
+
+    <div class="indicador-secuencia" id="indicadorSecuencia">
+        <div style="color: #00FFFF; font-weight: bold;">🎯 SECUENCIA ACTIVA</div>
+        <div id="secuenciaActual" style="color: white; font-family: monospace; font-size: 10px;">Preparando...</div>
+    </div>
+
+    <div class="grilla-helices">
+        <div class="helice-item inicial" data-motor="1" onclick="clickHelice(1)">
+            <div class="numero-helice">1</div>
+            <div class="aspas" id="aspas1">
+                <div class="aspa"></div>
+                <div class="aspa"></div>
+            </div>
+            <div class="rpm-display" id="rpm1">RPM: 0</div>
+        </div>
+        <div class="helice-item inicial" data-motor="2" onclick="clickHelice(2)">
+            <div class="numero-helice">2</div>
+            <div class="aspas" id="aspas2">
+                <div class="aspa"></div>
+                <div class="aspa"></div>
+            </div>
+            <div class="rpm-display" id="rpm2">RPM: 0</div>
+        </div>
+        <div class="helice-item inicial" data-motor="3" onclick="clickHelice(3)">
+            <div class="numero-helice">3</div>
+            <div class="aspas" id="aspas3">
+                <div class="aspa"></div>
+                <div class="aspa"></div>
+            </div>
+            <div class="rpm-display" id="rpm3">RPM: 0</div>
+        </div>
+        <div class="helice-item inicial" data-motor="4" onclick="clickHelice(4)">
+            <div class="numero-helice">4</div>
+            <div class="aspas" id="aspas4">
+                <div class="aspa"></div>
+                <div class="aspa"></div>
+            </div>
+            <div class="rpm-display" id="rpm4">RPM: 0</div>
+        </div>
+        <div class="helice-item inicial" data-motor="5" onclick="clickHelice(5)">
+            <div class="numero-helice">5</div>
+            <div class="aspas" id="aspas5">
+                <div class="aspa"></div>
+                <div class="aspa"></div>
+            </div>
+            <div class="rpm-display" id="rpm5">RPM: 0</div>
+        </div>
+    </div>
+
+    <div class="info-ultima" id="infoUltima">
+        <div id="textoUltima">Última hélice disparada: Ninguna</div>
+    </div>
+
+    <div class="controles">
+        <button class="btn-control btn-sortear" id="btnSortear" onclick="iniciarSorteo()">🎯 SORTEAR</button>
+                <button class="btn-control btn-disparar" id="btnDisparar" onclick="ejecutarDisparo()" disabled>💥 DISPARAR</button>  
+        <button class="btn-control btn-recupero" id="btnRecupero" onclick="recuperarHelice()" disabled>🔧 RECUPERO</button>  
+        <button class="btn-control" onclick="resetearTodo()">🔄 RESET</button>  
+    </div>  
+
+    <!-- PANEL RPM MÓVIL -->  
+    <div class="panel-rpm" id="panelRPM">  
+        <h3 style="color: var(--color-accent); text-align: center; margin-bottom: 15px;">🔧 Control RPM</h3>  
+        <div class="rpm-control">  
+            <span>Hélice 1:</span>  
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
+                   onchange="cambiarRPM(1, this.value)" id="sliderRPM1">  
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM1">2500</span>  
+        </div>  
+        <div class="rpm-control">  
+            <span>Hélice 2:</span>  
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
+                   onchange="cambiarRPM(2, this.value)" id="sliderRPM2">  
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM2">2500</span>  
+        </div>  
+        <div class="rpm-control">  
+            <span>Hélice 3:</span>  
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
+                   onchange="cambiarRPM(3, this.value)" id="sliderRPM3">  
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM3">2500</span>  
+        </div>  
+        <div class="rpm-control">  
+            <span>Hélice 4:</span>  
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
+                   onchange="cambiarRPM(4, this.value)" id="sliderRPM4">  
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM4">2500</span>  
+        </div>  
+        <div class="rpm-control">  
+            <span>Hélice 5:</span>  
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
+                   onchange="cambiarRPM(5, this.value)" id="sliderRPM5">  
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM5">2500</span>  
+        </div>  
+        <div style="text-align: center; margin-top: 15px;">  
+            <button class="audio-btn" onclick="cerrarPanelRPM()">Cerrar</button>  
+        </div>  
+    </div>  
+
+    <!-- PANEL AUDIO MÓVIL -->  
+    <div class="panel-audio" id="panelAudio">  
+        <h3 style="color: #00FF00; text-align: center; margin-bottom: 15px;">🎤 Control de Audio</h3>  
+        <div class="audio-control">  
+            <span>Comando de voz:</span>  
+            <button class="audio-btn" id="btnComandoVoz" onclick="toggleComandoVoz()">Desactivado</button>  
+        </div>  
+        <div class="audio-control">  
+            <span>Ganancia:</span>  
+            <input type="range" class="rpm-slider" min="0" max="100" value="50"   
+                   onchange="cambiarGanancia(this.value)" id="sliderGanancia">  
+            <span style="color: var(--color-success); font-weight: bold;" id="valorGanancia">50%</span>  
+        </div>  
+        <div style="text-align: center; margin-top: 15px;">  
+            <button class="audio-btn" onclick="cerrarPanelAudio()">Cerrar</button>  
+        </div>  
+    </div>  
+
+    <script>  
+        // ========== VARIABLES GLOBALES PWA ==========  
+        let deferredPrompt = null;  
+        let tirosTotales = 3;  
+        let tirosRestantes = 3;  
+        let tirosAntesDelDisparo = 0;  
+        let sorteoActivo = false;  
+        let ultimaHeliceDisparada = null;  
+        let intervaloSorteo = null;  
+        let timerAutoReset = null;  
+        let segundosRestantes = 0;  
+        let indiceSecuencial = 0;  
+        let helicesSecuencia = [];  
+        let temaActual = 'noche';  
+
+        let estadoHelices = {  
+            1: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },  
+            2: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },  
+            3: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },  
+            4: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },  
+            5: { encendida: false, excluida: false, eliminada: false, rpm: 2500 }  
+        };  
+
+        let configuracionAudio = {  
+            comandoVoz: false,  
+            ganancia: 50  
+        };  
+
+        // ========== PWA - INSTALACIÓN MEJORADA ==========  
+        window.addEventListener('beforeinstallprompt', (e) => {  
+            console.log('📱 PWA: Prompt de instalación disponible');  
+            e.preventDefault();  
+            deferredPrompt = e;  
+        });  
+
+        function instalarApp() {  
+            console.log('📱 Intentando instalar PWA...');  
+            
+            if (deferredPrompt) {  
+                deferredPrompt.prompt();  
+                deferredPrompt.userChoice.then((choiceResult) => {  
+                    if (choiceResult.outcome === 'accepted') {  
+                        console.log('✅ PWA instalada correctamente');  
+                        document.getElementById('installBanner').innerHTML = '🎉 ¡LHAZ instalada exitosamente!';  
+                        document.getElementById('installBanner').classList.add('instalada');  
+                        setTimeout(() => {  
+                            document.getElementById('installBanner').style.display = 'none';  
+                        }, 3000);  
+                        vibrarFeedback('sorteo');  
+                    }  
+                    deferredPrompt = null;  
+                });  
+            } else {  
+                mostrarInstruccionesInstalacion();  
+            }  
+        }  
+
+        function mostrarInstruccionesInstalacion() {  
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);  
+            const isAndroid = /Android/.test(navigator.userAgent);  
+            const isChrome = /Chrome/.test(navigator.userAgent);  
+            const isSafari = /Safari/.test(navigator.userAgent) && !isChrome;  
+            
+            let instrucciones = '';  
+            
+            if (isIOS && isSafari) {  
+                instrucciones = `📱 iOS: Toca el botón COMPARTIR 📤 → "Añadir a pantalla de inicio" → Confirmar ✅`;  
+            } else if (isAndroid && isChrome) {  
+                instrucciones = `📱 Android: Menú ⋮ → "Instalar aplicación" → Confirmar ✅`;  
+            } else {  
+                instrucciones = `📱 Busca el icono "Instalar" en tu navegador o usa el menú → "Instalar LHAZ"`;  
+            }  
+            
+            document.getElementById('estadoPrincipal').textContent = instrucciones;  
+            
+            setTimeout(() => {  
+                document.getElementById('estadoPrincipal').textContent = 'Sistema listo - Presiona SORTEAR para iniciar';  
+            }, 6000);  
+            
+            console.log('📱 Instrucciones mostradas');  
+        }  
+
+        // ========== SERVICE WORKER ==========  
+        function registrarServiceWorker() {  
+            if ('serviceWorker' in navigator) {  
+                const swCode = `  
+                    const CACHE_NAME = 'lhaz-pwa-v1';  
+                    self.addEventListener('install', (event) => {  
+                        self.skipWaiting();  
+                    });  
+                    self.addEventListener('fetch', (event) => {  
+                        event.respondWith(  
+                            caches.match(event.request).then((response) => {  
+                                return response || fetch(event.request);  
+                            })  
+                        );  
+                    });  
+                `;  
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });  
+                const swURL = URL.createObjectURL(blob);  
+                
+                navigator.serviceWorker.register(swURL)  
+                    .then(() => console.log('✅ Service Worker registrado'))  
+                    .catch(() => console.log('❌ Error Service Worker'));  
+            }  
+        }  
+
+        // ========== MANIFEST DINÁMICO ==========  
+        function crearManifest() {  
+            const manifest = {  
+                name: "LHAZ - Sistema Sorteo Hélices",  
+                short_name: "LHAZ",  
+                description: "Sistema profesional de sorteo de hélices para dispositivos móviles",  
+                start_url: "./",  
+                display: "standalone",  
+                background_color: "#000000",  
+                theme_color: "#FFD700",  
+                orientation: "portrait-primary",  
+                icons: [  
+                    {  
+                        src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiMwMDAwMDAiIHJ4PSIyNCIvPjx0ZXh0IHg9Ijk2IiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0ZGRDcwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TEhBWjwvdGV4dD48L3N2Zz4=",  
+                        sizes: "192x192",  
+                        type: "image/svg+xml"  
+                    },  
+                    {  
+                        src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiMwMDAwMDAiIHJ4PSI2NCIvPjx0ZXh0IHg9IjI1NiIgeT0iMjkwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMjgiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjRkZENzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5MSEFaPC90ZXh0Pjwvc3ZnPg==",  
+                        sizes: "512x512",  
+                        type: "image/svg+xml"  
+                    }  
+                ]  
+            };  
+            
+            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });  
+            const manifestURL = URL.createObjectURL(manifestBlob);  
+            document.getElementById('manifest-link').href = manifestURL;  
+        }  
+
+        // ========== TODAS LAS DEMÁS FUNCIONES (IGUALES QUE ANTES) ==========  
+        function toggleTema() {  
+            const body = document.body;  
+            const btnTema = document.getElementById('btnTema');  
+            
+            if (temaActual === 'noche') {  
+                body.classList.remove('tema-noche');  
+                body.classList.add('tema-dia');  
+                btnTema.textContent = '☀️';  
+                btnTema.title = 'Cambiar a Modo Noche';  
+                temaActual = 'dia';  
+                document.getElementById('estadoPrincipal').textContent = '☀️ MODO DÍA activado - Tema claro aplicado';  
+            } else {  
+                body.classList.remove('tema-dia');  
+                body.classList.add('tema-noche');  
+                btnTema.textContent = '🌙';  
+                btnTema.title = 'Cambiar a Modo Día';  
+                temaActual = 'noche';  
+                document.getElementById('estadoPrincipal').textContent = '🌙 MODO NOCHE activado - Tema oscuro aplicado';  
+            }  
+            
+            localStorage.setItem('tema-lhaz-pwa', temaActual);  
+            vibrarFeedback();  
+        }  
+
+        function seleccionarTiros(cantidad) {  
+            if (sorteoActivo) return;  
+            tirosTotales = cantidad;  
+            tirosRestantes = cantidad;  
+            
+            document.querySelectorAll('.btn-tiro').forEach(btn => btn.classList.remove('activo'));  
+            event.target.classList.add('activo');  
+            
+            document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
+            document.getElementById('estadoPrincipal').textContent = `Configuración: ${cantidad} tiros - Presiona SORTEAR`;  
+        }  
+
+        function iniciarSorteo() {  
+            if (sorteoActivo) return;  
+            
+            if (timerAutoReset) {  
+                clearInterval(timerAutoReset);  
+                timerAutoReset = null;  
+                segundosRestantes = 0;  
+                document.body.classList.remove('countdown-urgente');  
+            }  
+            
+            helicesSecuencia = [];  
+            for (let i = 1; i <= 5; i++) {  
+                if (!estadoHelices[i].eliminada && !estadoHelices[i].excluida) {  
+                    helicesSecuencia.push(i);  
+                    estadoHelices[i].encendida = true;  
+                    actualizarHelice(i);  
+                    document.getElementById(`aspas${i}`).classList.add('girando');  
+                }  
+            }  
+            
+            if (helicesSecuencia.length === 0) {  
+                document.getElementById('estadoPrincipal').textContent = 'No hay hélices disponibles - Usa RECUPERO o RESET';  
+                return;  
+            }  
+            
+            sorteoActivo = true;  
+            indiceSecuencial = 0;  
+            
+            document.getElementById('btnSortear').disabled = true;  
+            document.getElementById('indicadorSecuencia').classList.add('activo');  
+            
+            iniciarSecuenciaCircular();  
+            document.getElementById('estadoPrincipal').textContent = `⚡ SORTEO ACTIVO - ${helicesSecuencia.length} hélices - Toca para EXCLUIR`;  
+            
+            vibrarFeedback('sorteo');  
+        }  
+
+        function iniciarSecuenciaCircular() {  
+            intervaloSorteo = setInterval(() => {  
+                document.querySelectorAll('.helice-item').forEach(h => h.classList.remove('secuencia-actual'));  
+                
+                const heliceActual = helicesSecuencia[indiceSecuencial];  
+                const heliceElement = document.querySelector(`[data-motor="${heliceActual}"]`);  
+                if (heliceElement && !estadoHelices[heliceActual].eliminada && !estadoHelices[heliceActual].excluida) {  
+                    heliceElement.classList.add('secuencia-actual');  
+                }  
+                
+                indiceSecuencial = (indiceSecuencial + 1) % helicesSecuencia.length;  
+                
+                const secuencia = helicesSecuencia.map((h, idx) =>   
+                    idx === (indiceSecuencial - 1 + helicesSecuencia.length) % helicesSecuencia.length ? `[${h}]` : h  
+                ).join(' → ');  
+                document.getElementById('secuenciaActual').textContent = secuencia;  
+                
+            }, 200);  
+            
+            setTimeout(() => {  
+                document.getElementById('btnDisparar').disabled = false;  
+                document.getElementById('btnDisparar').classList.add('listo');  
+            }, 1000);  
+        }  
+
+        function ejecutarDisparo() {  
+            if (!sorteoActivo) return;  
+            
+            clearInterval(intervaloSorteo);  
+            sorteoActivo = false;  
+            
+            const heliceSeleccionada = document.querySelector('.secuencia-actual');  
+            if (!heliceSeleccionada) {  
+                document.getElementById('estadoPrincipal').textContent = '❌ Error: No hay hélice seleccionada';  
+                return;  
+            }  
+            
+            const motor = parseInt(heliceSeleccionada.getAttribute('data-motor'));  
+            tirosAntesDelDisparo = tirosRestantes;  
+            
+            document.getElementById('btnDisparar').disabled = true;  
+            document.getElementById('btnDisparar').classList.remove('listo');  
+            
+            document.querySelectorAll('.helice-item').forEach(h => h.classList.remove('secuencia-actual'));  
+            heliceSeleccionada.classList.add('disparando');  
+            
+            for (let i = 1; i <= 5; i++) {  
+                document.getElementById(`aspas${i}`).classList.remove('girando');  
+            }  
+            
+            document.getElementById('indicadorSecuencia').classList.remove('activo');  
+            document.getElementById('estadoPrincipal').textContent = `💥 HÉLICE ${motor} DISPARADA - Procesando...`;  
+            
+            vibrarFeedback('disparo');  
+            
+            setTimeout(() => {  
+                estadoHelices[motor].eliminada = true;  
+                estadoHelices[motor].encendida = false;  
+                estadoHelices[motor].excluida = false;  
+                ultimaHeliceDisparada = motor;  
+                
+                heliceSeleccionada.classList.remove('disparando');  
+                actualizarHelice(motor);  
+                
+                tirosRestantes--;  
+                document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
+                document.getElementById('textoUltima').textContent = `Última hélice disparada: ${motor} - RECUPERO disponible`;  
+                
+                const infoElement = document.getElementById('infoUltima');  
+                const btnRecupero = document.getElementById('btnRecupero');  
+                infoElement.classList.add('disponible');  
+                btnRecupero.disabled = false;  
+                btnRecupero.classList.add('disponible');  
+                
+                const helicesDisponibles = helicesSecuencia.filter(h => !estadoHelices[h].eliminada).length - 1;  
+                
+                if (tirosRestantes <= 0) {  
+                    document.getElementById('estadoPrincipal').textContent = `🏁 JUEGO TERMINADO - Auto-reset en 10s`;  
+                    document.getElementById('btnSortear').disabled = true;  
+                    iniciarAutoReset(10);  
+                } else if (helicesDisponibles === 0) {  
+                    document.getElementById('estadoPrincipal').textContent = `🏁 NO QUEDAN HÉLICES - Auto-reset en 10s`;  
+                    document.getElementById('btnSortear').disabled = true;  
+                    iniciarAutoReset(10);  
+                } else {  
+                    const tiroActual = tirosTotales - tirosRestantes + 1;  
+                    document.getElementById('estadoPrincipal').textContent = `✅ Hélice ${motor} eliminada - ${helicesDisponibles} disponibles`;  
+                    document.getElementById('btnSortear').disabled = false;  
+                }  
+                
+                helicesSecuencia = [];  
+            }, 1500);  
+        }  
+
+        function recuperarHelice() {  
+            if (!ultimaHeliceDisparada || sorteoActivo) return;  
+            
+            if (timerAutoReset) {  
+                clearInterval(timerAutoReset);  
+                timerAutoReset = null;  
+                segundosRestantes = 0;  
+                document.body.classList.remove('countdown-urgente');  
+            }  
+            
+            const motor = ultimaHeliceDisparada;  
+            
+            estadoHelices[motor].eliminada = false;  
+            estadoHelices[motor].excluida = false;  
+            estadoHelices[motor].encendida = false;  
+            
+            const heliceElement = document.querySelector(`[data-motor="${motor}"]`);  
+            if (heliceElement) {  
+                heliceElement.classList.add('recuperando');  
+                setTimeout(() => {  
+                    heliceElement.classList.remove('recuperando');  
+                    actualizarHelice(motor);  
+                }, 1000);  
+            }  
+            
+            tirosRestantes = tirosAntesDelDisparo;  
+            
+            document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
+            document.getElementById('btnSortear').disabled = false;  
+            
+            if (tirosRestantes <= 0) {  
+                tirosRestantes = 1;  
+                document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
+                document.getElementById('estadoPrincipal').textContent = `🔧 Hélice ${motor} RECUPERADA - Última oportunidad`;  
+            } else {  
+                document.getElementById('estadoPrincipal').textContent = `🔧 Hélice ${motor} RECUPERADA - Continúa el juego`;  
+            }  
+            
+            ultimaHeliceDisparada = null;  
+            document.getElementById('textoUltima').textContent = 'Última hélice disparada: Ninguna';  
+            document.getElementById('infoUltima').classList.remove('disponible');  
+            document.getElementById('btnRecupero').disabled = true;  
+            document.getElementById('btnRecupero').classList.remove('disponible');  
+            
+            vibrarFeedback('recupero');  
+        }  
+
+        function clickHelice(motor) {  
+            if (sorteoActivo) {  
+                toggleExclusionEnSorteo(motor);  
+            } else {  
+                toggleHeliceManual(motor);  
+            }  
+            vibrarFeedback();  
+        }  
+
+        function toggleExclusionEnSorteo(motor) {  
+            if (estadoHelices[motor].eliminada) {  
+                document.getElementById('estadoPrincipal').textContent = `❌ Hélice ${motor} está ELIMINADA - Usa RECUPERO`;  
+                return;  
+            }  
+            
+            const heliceElement = document.querySelector(`[data-motor="${motor}"]`);  
+            const aspasElement = document.getElementById(`aspas${motor}`);  
+            
+            if (!estadoHelices[motor].excluida) {  
+                estadoHelices[motor].excluida = true;  
+                estadoHelices[motor].encendida = false;  
+                
+                helicesSecuencia = helicesSecuencia.filter(h => h !== motor);  
+                
+                if (aspasElement) aspasElement.classList.remove('girando');  
+                if (heliceElement) {  
+                    heliceElement.classList.remove('encendida', 'secuencia-actual');  
+                    heliceElement.classList.add('excluida');  
+                }  
+                
+                document.getElementById('estadoPrincipal').textContent = `⚠️ Hélice ${motor} EXCLUIDA - ${helicesSecuencia.length} participando`;  
+                
+            } else {  
+                estadoHelices[motor].excluida = false;  
+                estadoHelices[motor].encendida = true;  
+                
+                helicesSecuencia.push(motor);  
+                helicesSecuencia.sort((a, b) => a - b);  
+                
+                if (aspasElement) aspasElement.classList.add('girando');  
+                if (heliceElement) {  
+                    heliceElement.classList.remove('excluida');  
+                    heliceElement.classList.add('encendida');  
+                }  
+                
+                document.getElementById('estadoPrincipal').textContent = `✅ Hélice ${motor} INCLUIDA - ${helicesSecuencia.length} participando`;  
+            }  
+            
+            actualizarHelice(motor);  
+            
+            if (helicesSecuencia.length === 0) {  
+                sorteoActivo = false;  
+                clearInterval(intervaloSorteo);  
+                document.getElementById('indicadorSecuencia').classList.remove('activo');  
+                document.getElementById('btnDisparar').disabled = true;  
+                document.getElementById('btnDisparar').classList.remove('listo');  
+                document.getElementById('btnSortear').disabled = false;  
+                document.getElementById('estadoPrincipal').textContent = '❌ No quedan hélices - Incluye al menos una';  
+            }  
+        }  
+
+        function toggleHeliceManual(motor) {  
+            if (estadoHelices[motor].eliminada) return;  
+            
+            estadoHelices[motor].encendida = !estadoHelices[motor].encendida;  
+            actualizarHelice(motor);  
+            
+            const aspasElement = document.getElementById(`aspas${motor}`);  
+            if (aspasElement) {  
+                if (estadoHelices[motor].encendida) {  
+                    aspasElement.classList.add('girando');  
+                } else {  
+                    aspasElement.classList.remove('girando');  
+                }  
+            }  
+            
+            const estado = estadoHelices[motor].encendida ? 'encendida' : 'apagada';  
+            document.getElementById('estadoPrincipal').textContent = `Hélice ${motor} ${estado} manualmente`;  
+        }  
+
+        function iniciarAutoReset(segundos) {  
+            segundosRestantes = segundos;  
+            
+            timerAutoReset = setInterval(() => {  
+                segundosRestantes--;  
+                
+                if (segundosRestantes <= 3) {  
+                    document.body.classList.add('countdown-urgente');  
+                    vibrarFeedback('error');  
+                }  
+                
+                document.getElementById('estadoPrincipal').textContent = `⏰ Auto-reset en ${segundosRestantes}s`;  
+                
+                if (segundosRestantes <= 0) {  
+                    clearInterval(timerAutoReset);  
+                    timerAutoReset = null;  
+                    resetearTodo();  
+                }  
+            }, 1000);  
+        }  
+
+        function resetearTodo() {  
+            if (intervaloSorteo) {  
+                clearInterval(intervaloSorteo);  
+                intervaloSorteo = null;  
+            }  
+            if (timerAutoReset) {  
+                clearInterval(timerAutoReset);  
+                timerAutoReset = null;  
+                segundosRestantes = 0;  
+            }  
+            
+            document.body.classList.remove('countdown-urgente');  
+            document.querySelectorAll('.helice-item').forEach(h => {  
+                h.classList.remove('secuencia-actual', 'disparando', 'recuperando');  
+            });  
+            
+            sorteoActivo = false;  
+            ultimaHeliceDisparada = null;  
+            tirosAntesDelDisparo = 0;  
+            tirosRestantes = tirosTotales;  
+            helicesSecuencia = [];  
+            
+            for (let i = 1; i <= 5; i++) {  
+                estadoHelices[i] = { encendida: false, excluida: false, eliminada: false, rpm: estadoHelices[i].rpm };  
+                actualizarHelice(i);  
+                document.getElementById(`aspas${i}`).classList.remove('girando');  
+            }  
+            
+            document.getElementById('btnSortear').disabled = false;  
+            document.getElementById('btnDisparar').disabled = true;  
+            document.getElementById('btnDisparar').classList.remove('listo');  
+            document.getElementById('btnRecupero').disabled = true;  
+            document.getElementById('btnRecupero').classList.remove('disponible');  
+            document.getElementById('indicadorSecuencia').classList.remove('activo');  
+            document.getElementById('infoUltima').classList.remove('disponible');  
+            
+            document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
+            document.getElementById('textoUltima').textContent = 'Última hélice disparada: Ninguna';  
+            document.getElementById('estadoPrincipal').textContent = `🔄 SISTEMA RESETEADO - Presiona SORTEAR`;  
+            
+            vibrarFeedback('reset');  
+        }  
+
+        function actualizarHelice(motor) {  
+            const helice = document.querySelector(`[data-motor="${motor}"]`);  
+            const rpm = document.getElementById(`rpm${motor}`);  
+            
+            if (!helice) return;  
+            
+            helice.classList.remove('inicial', 'encendida', 'excluida', 'eliminada');  
+            
+            if (estadoHelices[motor].eliminada) {  
+                helice.classList.add('eliminada');  
+                if (rpm) rpm.textContent = 'ELIM';  
+            } else if (estadoHelices[motor].excluida) {  
+                helice.classList.add('excluida');  
+                if (rpm) rpm.textContent = 'EXCL';  
+            } else if (estadoHelices[motor].encendida) {  
+                helice.classList.add('encendida');  
+                if (rpm) rpm.textContent = `${estadoHelices[motor].rpm}`;  
+            } else {  
+                helice.classList.add('inicial');  
+                if (rpm) rpm.textContent = 'RPM: 0';  
+            }  
+        }  
+
+        // ========== PANELES Y CONTROLES ==========  
+        function abrirPanelRPM() {  
+            document.getElementById('overlay').classList.add('activo');  
+            document.getElementById('panelRPM').classList.add('activo');  
+        }  
+
+        function cerrarPanelRPM() {  
+            document.getElementById('overlay').classList.remove('activo');  
+            document.getElementById('panelRPM').classList.remove('activo');  
+        }  
+
+        function cambiarRPM(motor, valor) {  
+            estadoHelices[motor].rpm = parseInt(valor);  
+            document.getElementById(`valorRPM${motor}`).textContent = valor;  
+            
+            if (estadoHelices[motor].encendida) {  
+                                document.getElementById(`rpm${motor}`).textContent = valor;
+            }
+        }
+
+        function abrirPanelAudio() {
+            document.getElementById('overlay').classList.add('activo');
+            document.getElementById('panelAudio').classList.add('activo');
+        }
+
+        function cerrarPanelAudio() {
+            document.getElementById('overlay').classList.remove('activo');
+            document.getElementById('panelAudio').classList.remove('activo');
+        }
+
+        function toggleComandoVoz() {
+            configuracionAudio.comandoVoz = !configuracionAudio.comandoVoz;
+            const btn = document.getElementById('btnComandoVoz');
+            btn.textContent = configuracionAudio.comandoVoz ? 'Activado' : 'Desactivado';
+            btn.classList.toggle('activo', configuracionAudio.comandoVoz);
+            
+            if (configuracionAudio.comandoVoz) {
+                iniciarReconocimientoVoz();
+            } else {
+                detenerReconocimientoVoz();
+            }
+        }
+
+        function cambiarGanancia(valor) {
+            configuracionAudio.ganancia = parseInt(valor);
+            document.getElementById('valorGanancia').textContent = `${valor}%`;
+        }
+
+        function iniciarReconocimientoVoz() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                
+                recognition.continuous = true;
+                recognition.lang = 'es-ES';
+                recognition.interimResults = false;
+                
+                recognition.onresult = function(event) {
+                    const command = event.results[event.results.length - 1][0].transcript.toLowerCase();
+                    
+                    if (command.includes('disparar') && !document.getElementById('btnDisparar').disabled) {
+                        ejecutarDisparo();
+                        document.getElementById('estadoPrincipal').textContent = '🎤 Comando "DISPARAR" ejecutado';
+                    } else if (command.includes('sortear') && !document.getElementById('btnSortear').disabled) {
+                        iniciarSorteo();
+                        document.getElementById('estadoPrincipal').textContent = '🎤 Comando "SORTEAR" ejecutado';
+                    } else if (command.includes('reset')) {
+                        resetearTodo();
+                        document.getElementById('estadoPrincipal').textContent = '🎤 Comando "RESET" ejecutado';
+                    }
+                };
+                
+                recognition.start();
+                window.currentRecognition = recognition;
+            }
+        }
+
+        function detenerReconocimientoVoz() {
+            if (window.currentRecognition) {
+                window.currentRecognition.stop();
+                window.currentRecognition = null;
+            }
+        }
+
+        function cerrarPaneles() {
+            document.getElementById('overlay').classList.remove('activo');
+            document.getElementById('panelRPM').classList.remove('activo');
+            document.getElementById('panelAudio').classList.remove('activo');
+        }
+
+        function vibrarFeedback(tipo = 'normal') {
+            if (!('vibrate' in navigator)) return;
+            
+            switch (tipo) {
+                case 'disparo':
+                    navigator.vibrate([200, 100, 200, 100, 300]);
+                    break;
+                case 'sorteo':
+                    navigator.vibrate([100, 50, 100]);
+                    break;
+                case 'reset':
+                    navigator.vibrate([150, 100, 150]);
+                    break;
+                case 'error':
+                    navigator.vibrate([300, 100, 300]);
+                    break;
+                case 'recupero':
+                    navigator.vibrate([100, 50, 100, 50, 100]);
+                    break;
+                default:
+                    navigator.vibrate([100]);
+            }
+        }
+
+        function cargarTemaGuardado() {
+            const temaGuardado = localStorage.getItem('tema-lhaz-pwa');
+            if (temaGuardado && temaGuardado !== temaActual) {
+                toggleTema();
+            }
+        }
+
+        // ========== INICIALIZACIÓN PWA COMPLETA ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚁 LHAZ PWA - Iniciando aplicación móvil...');
+            
+            // Crear manifest y service worker
+            crearManifest();
+            registrarServiceWorker();
+            
+            // Cargar configuraciones
+            cargarTemaGuardado();
+            
+            // Inicializar hélices
+            for (let i = 1; i <= 5; i++) {
+                actualizarHelice(i);
+            }
+            
+            // Mostrar banner de instalación después de 1 segundo
+            setTimeout(() => {
+                document.getElementById('installBanner').style.display = 'block';
+                console.log('📱 Banner de instalación mostrado');
+            }, 1000);
+            
+            // Detectar si ya está instalada como PWA
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                               window.navigator.standalone === true;
+            
+            if (isStandalone) {
+                console.log('✅ PWA ya instalada como aplicación');
+                document.getElementById('installBanner').innerHTML = '✅ ¡LHAZ ya instalada como app!';
+                document.getElementById('installBanner').classList.add('instalada');
+                setTimeout(() => {
+                    document.getElementById('installBanner').style.display = 'none';
+                }, 3000);
+            }
+            
+            // Prevenir zoom en dispositivos móviles
+            document.addEventListener('touchstart', function(event) {
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+            
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+            
+            // Prevenir scroll global pero permitir en paneles
+            document.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+            
+            document.getElementById('panelRPM').addEventListener('touchmove', function(e) {
+                e.stopPropagation();
+            });
+            
+            document.getElementById('panelAudio').addEventListener('touchmove', function(e) {
+                e.stopPropagation();
+            });
+            
+            console.log('✅ LHAZ PWA - Inicialización completa');
+            console.log('📱 Para instalar: Toca el banner dorado o usa el menú del navegador');
+        });
+
+        // ========== EVENTOS PWA FINALES ==========
+        window.addEventListener('appinstalled', () => {
+            console.log('🎉 PWA: Aplicación instalada exitosamente');
+            document.getElementById('installBanner').style.display = 'none';
+            document.getElementById('estadoPrincipal').textContent = '🎉 ¡LHAZ instalada como app nativa!';
+            vibrarFeedback('sorteo');
+        });
+
+    </script>
+</body>
+</html>

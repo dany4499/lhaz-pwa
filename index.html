@@ -71,7 +71,7 @@
             touch-action: manipulation;
         }
 
-        /* ========== BANNER INSTALACIÓN MEJORADO ========== */
+        /* ========== BANNER INSTALACIÓN ========== */
         .install-banner {
             background: linear-gradient(135deg, #FFD700, #FFA500);
             color: black;
@@ -86,9 +86,7 @@
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
             border: 2px solid #FFA500;
             font-size: 14px;
-            animation: 
-                aparecer-banner 1s ease-out,
-                pulso-atencion 2s ease-in-out 5s infinite;
+            animation: aparecer-banner 1s ease-out;
         }
 
         @keyframes aparecer-banner {
@@ -96,24 +94,12 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        @keyframes pulso-atencion {
-            0%, 90% { transform: scale(1); }
-            95% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
-
         .install-banner:hover, .install-banner:active {
             transform: scale(1.02);
             box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #FFA500, #FF8C00);
         }
 
-        .install-banner.instalada {
-            background: linear-gradient(135deg, #00FF00, #00CC00);
-            color: white;
-        }
-
-        /* ========== TÍTULO LHAZ MÓVIL ========== */
+        /* ========== TÍTULO PRINCIPAL ========== */
         .titulo-principal {
             text-align: center;
             margin: 10px 0 20px 0;
@@ -138,17 +124,7 @@
                 3px -3px 0px #000000,
                 -3px 3px 0px #000000,
                 3px 3px 0px #000000,
-                0px -3px 0px #000000,
-                0px 3px 0px #000000,
-                -3px 0px 0px #000000,
-                3px 0px 0px #000000,
-                0 0 15px #FFD700,
-                0 0 30px #FFD700;
-            
-            position: relative;
-            display: inline-block;
-            -webkit-text-fill-color: #FFFFFF;
-            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1)) contrast(2) brightness(1.3);
+                0 0 15px #FFD700;
             animation: pulso-titulo 3s ease-in-out infinite alternate;
         }
 
@@ -157,7 +133,7 @@
             100% { transform: scale(1.02); }
         }
 
-        /* ========== COMPONENTES MÓVIL ========== */
+        /* ========== CABECERA ========== */
         .cabecera {
             display: flex;
             justify-content: space-between;
@@ -201,11 +177,7 @@
             color: var(--bg-tertiario); 
         }
 
-        .btn-tiro:hover, .btn-tiro:active, 
-        .btn-circular:hover, .btn-circular:active { 
-            transform: scale(1.05); 
-        }
-
+        /* ========== PANEL ESTADO ========== */
         .panel-estado {
             background: var(--bg-secondary);
             border: 2px solid var(--color-borde);
@@ -240,10 +212,6 @@
             transition: all 0.3s ease;
             touch-action: manipulation;
             min-height: 70px;
-        }
-
-        .helice-item:hover, .helice-item:active { 
-            transform: scale(1.05); 
         }
 
         .helice-item.inicial { background: var(--bg-tertiario); }
@@ -374,21 +342,13 @@
         }
 
         .btn-recupero { border-color: #0088FF; }
-        .btn-recupero.disponible {
-            animation: pulso-recupero 2s ease-in-out infinite alternate;
-        }
 
         @keyframes pulso-disparar {
             from { box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); }
             to { box-shadow: 0 0 20px rgba(255, 0, 0, 0.9); }
         }
 
-        @keyframes pulso-recupero {
-            from { box-shadow: 0 0 10px rgba(0, 136, 255, 0.6); }
-            to { box-shadow: 0 0 20px rgba(0, 136, 255, 0.8); }
-        }
-
-        /* ========== INFO Y SECUENCIA ========== */
+        /* ========== INFO ========== */
         .info-ultima { 
             background: var(--bg-secondary); 
             border: 2px solid var(--color-borde); 
@@ -397,12 +357,6 @@
             text-align: center; 
             border-radius: 8px;
             font-size: 12px;
-        }
-
-        .info-ultima.disponible {
-            border-color: #0088FF;
-            background: color-mix(in srgb, var(--color-info) 20%, var(--bg-secondary));
-            box-shadow: 0 0 15px rgba(0, 136, 255, 0.4);
         }
 
         .indicador-secuencia { 
@@ -432,7 +386,6 @@
             width: 90%;
             max-width: 400px;
             display: none;
-            transition: all 0.5s ease;
         }
 
         .panel-rpm.activo, .panel-audio.activo { display: block; }
@@ -483,7 +436,6 @@
             .grilla-helices { gap: 6px; }
             .aspas { width: 35px; height: 35px; }
             .btn-control { font-size: 11px; padding: 10px 6px; }
-            .panel-estado { font-size: 11px; }
         }
 
         @media (max-width: 320px) {
@@ -492,40 +444,34 @@
             .numero-helice { font-size: 8px; }
         }
 
-      /* ROTACIÓN AUTOMÁTICA MÓVIL */
-@media screen and (orientation: landscape) and (max-height: 500px) {
-    html, body {
-        height: 100vh !important;
-        width: 100vw !important;
-        overflow-x: auto !important;
-    }
-    
-    .contenido-principal {
-        padding: 5px !important;
-        max-width: 100% !important;
-    }
-    
-    .titulo-principal {
-        font-size: 1.2rem !important;
-        margin: 5px 0 !important;
-    }
-    
-    .grilla-helices {
-        grid-template-columns: repeat(6, 1fr) !important;
-        gap: 8px !important;
-        max-width: 100% !important;
-    }
-    
-    .aspas {
-        width: 40px !important;
-        height: 40px !important;
-    }
-    
-    .controles {
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 5px !important;
-    }
-} 
+        /* ========== ROTACIÓN MÓVIL ========== */
+        @media screen and (orientation: landscape) and (max-height: 500px) {
+            .titulo-principal {
+                font-size: 1.5rem !important;
+                margin: 5px 0 !important;
+                padding: 8px !important;
+            }
+            
+            .grilla-helices {
+                grid-template-columns: repeat(6, 1fr) !important;
+                gap: 6px !important;
+            }
+            
+            .aspas {
+                width: 35px !important;
+                height: 35px !important;
+            }
+            
+            .controles {
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 8px !important;
+            }
+            
+            .btn-control {
+                padding: 8px 6px !important;
+                font-size: 10px !important;
+            }
+        }
 
         /* ========== TEMA DÍA ========== */
         .tema-dia .titulo-principal {
@@ -537,36 +483,22 @@
         .tema-dia .titulo-principal .texto-lhaz {
             color: #000000;
             text-shadow: 
-                -3px -3px 0px #FFFFFF, 3px -3px 0px #FFFFFF,
-                -3px 3px 0px #FFFFFF, 3px 3px 0px #FFFFFF,
-                0px -3px 0px #FFFFFF, 0px 3px 0px #FFFFFF,
-                -3px 0px 0px #FFFFFF, 3px 0px 0px #FFFFFF,
-                0 0 15px #f39c12, 0 0 30px #f39c12;
+                -2px -2px 0px #FFFFFF, 2px -2px 0px #FFFFFF,
+                -2px 2px 0px #FFFFFF, 2px 2px 0px #FFFFFF,
+                0 0 15px #f39c12;
         }
-
-        .countdown-urgente {
-            animation: parpadeo-urgente 0.5s ease-in-out;
-        }
-
-        @keyframes parpadeo-urgente {
-            0% { background: var(--bg-primary); }
-            50% { background: color-mix(in srgb, var(--color-danger) 30%, var(--bg-primary)); }
-            100% { background: var(--bg-primary); }
-        }
-        
-/* ========================================
-   ROTACIÓN AUTOMÁTICA DE PANTALLA
-   ======================================== */
+    </style>
+</head>
 
 <body class="tema-noche">
-    <!-- BANNER INSTALACIÓN PWA SIEMPRE VISIBLE -->
+    <!-- BANNER INSTALACIÓN PWA -->
     <div class="install-banner" id="installBanner" onclick="instalarApp()">
         📱 ¡Instalar LHAZ como App! - Toca aquí para descargar ✨
     </div>
 
     <div class="overlay" id="overlay" onclick="cerrarPaneles()"></div>
 
-    <!-- TÍTULO LHAZ MÓVIL -->
+    <!-- TÍTULO LHAZ -->
     <div class="titulo-principal">
         <div class="texto-lhaz">LHAZ</div>
     </div>
@@ -644,604 +576,505 @@
 
     <div class="controles">
         <button class="btn-control btn-sortear" id="btnSortear" onclick="iniciarSorteo()">🎯 SORTEAR</button>
-                <button class="btn-control btn-disparar" id="btnDisparar" onclick="ejecutarDisparo()" disabled>💥 DISPARAR</button>  
-        <button class="btn-control btn-recupero" id="btnRecupero" onclick="recuperarHelice()" disabled>🔧 RECUPERO</button>  
-        <button class="btn-control" onclick="resetearTodo()">🔄 RESET</button>  
-    </div>  
+        <button class="btn-control btn-disparar" id="btnDisparar" onclick="ejecutarDisparo()" disabled>💥 DISPARAR</button>
+        <button class="btn-control btn-recupero" id="btnRecupero" onclick="recuperarHelice()" disabled>🔧 RECUPERO</button>
+        <button class="btn-control" onclick="resetearTodo()">🔄 RESET</button>
+    </div>
 
-    <!-- PANEL RPM MÓVIL -->  
-    <div class="panel-rpm" id="panelRPM">  
-        <h3 style="color: var(--color-accent); text-align: center; margin-bottom: 15px;">🔧 Control RPM</h3>  
-        <div class="rpm-control">  
-            <span>Hélice 1:</span>  
-            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
-                   onchange="cambiarRPM(1, this.value)" id="sliderRPM1">  
-            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM1">2500</span>  
-        </div>  
-        <div class="rpm-control">  
-            <span>Hélice 2:</span>  
-            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
-                   onchange="cambiarRPM(2, this.value)" id="sliderRPM2">  
-            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM2">2500</span>  
-        </div>  
-        <div class="rpm-control">  
-            <span>Hélice 3:</span>  
-            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
-                   onchange="cambiarRPM(3, this.value)" id="sliderRPM3">  
-            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM3">2500</span>  
-        </div>  
-        <div class="rpm-control">  
-            <span>Hélice 4:</span>  
-            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
-                   onchange="cambiarRPM(4, this.value)" id="sliderRPM4">  
-            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM4">2500</span>  
-        </div>  
-        <div class="rpm-control">  
-            <span>Hélice 5:</span>  
-            <input type="range" class="rpm-slider" min="0" max="5600" value="2500"   
-                   onchange="cambiarRPM(5, this.value)" id="sliderRPM5">  
-            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM5">2500</span>  
-        </div>  
-        <div style="text-align: center; margin-top: 15px;">  
-            <button class="audio-btn" onclick="cerrarPanelRPM()">Cerrar</button>  
-        </div>  
-    </div>  
+    <!-- PANEL RPM -->
+    <div class="panel-rpm" id="panelRPM">
+        <h3 style="color: var(--color-accent); text-align: center; margin-bottom: 15px;">🔧 Control RPM</h3>
+        <div class="rpm-control">
+            <span>Hélice 1:</span>
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500" 
+                   onchange="cambiarRPM(1, this.value)" id="sliderRPM1">
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM1">2500</span>
+        </div>
+        <div class="rpm-control">
+            <span>Hélice 2:</span>
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500" 
+                   onchange="cambiarRPM(2, this.value)" id="sliderRPM2">
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM2">2500</span>
+        </div>
+        <div class="rpm-control">
+            <span>Hélice 3:</span>
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500" 
+                   onchange="cambiarRPM(3, this.value)" id="sliderRPM3">
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM3">2500</span>
+        </div>
+        <div class="rpm-control">
+            <span>Hélice 4:</span>
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500" 
+                   onchange="cambiarRPM(4, this.value)" id="sliderRPM4">
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM4">2500</span>
+        </div>
+        <div class="rpm-control">
+            <span>Hélice 5:</span>
+            <input type="range" class="rpm-slider" min="0" max="5600" value="2500" 
+                   onchange="cambiarRPM(5, this.value)" id="sliderRPM5">
+            <span style="color: var(--color-success); font-weight: bold;" id="valorRPM5">2500</span>
+        </div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button class="audio-btn" onclick="cerrarPanelRPM()">Cerrar</button>
+        </div>
+    </div>
 
-    <!-- PANEL AUDIO MÓVIL -->  
-    <div class="panel-audio" id="panelAudio">  
-        <h3 style="color: #00FF00; text-align: center; margin-bottom: 15px;">🎤 Control de Audio</h3>  
-        <div class="audio-control">  
-            <span>Comando de voz:</span>  
-            <button class="audio-btn" id="btnComandoVoz" onclick="toggleComandoVoz()">Desactivado</button>  
-        </div>  
-        <div class="audio-control">  
-            <span>Ganancia:</span>  
-            <input type="range" class="rpm-slider" min="0" max="100" value="50"   
-                   onchange="cambiarGanancia(this.value)" id="sliderGanancia">  
-            <span style="color: var(--color-success); font-weight: bold;" id="valorGanancia">50%</span>  
-        </div>  
-        <div style="text-align: center; margin-top: 15px;">  
-            <button class="audio-btn" onclick="cerrarPanelAudio()">Cerrar</button>  
-        </div>  
-    </div>  
+    <!-- PANEL AUDIO -->
+    <div class="panel-audio" id="panelAudio">
+        <h3 style="color: #00FF00; text-align: center; margin-bottom: 15px;">🎤 Control de Audio</h3>
+        <div class="audio-control">
+            <span>Comando de voz:</span>
+            <button class="audio-btn" id="btnComandoVoz" onclick="toggleComandoVoz()">Desactivado</button>
+        </div>
+        <div class="audio-control">
+            <span>Ganancia:</span>
+            <input type="range" class="rpm-slider" min="0" max="100" value="50" 
+                   onchange="cambiarGanancia(this.value)" id="sliderGanancia">
+            <span style="color: var(--color-success); font-weight: bold;" id="valorGanancia">50%</span>
+        </div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button class="audio-btn" onclick="cerrarPanelAudio()">Cerrar</button>
+        </div>
+    </div>
 
-    <script>  
-        // ========== VARIABLES GLOBALES PWA ==========  
-        let deferredPrompt = null;  
-        let tirosTotales = 3;  
-        let tirosRestantes = 3;  
-        let tirosAntesDelDisparo = 0;  
-        let sorteoActivo = false;  
-        let ultimaHeliceDisparada = null;  
-        let intervaloSorteo = null;  
-        let timerAutoReset = null;  
-        let segundosRestantes = 0;  
-        let indiceSecuencial = 0;  
-        let helicesSecuencia = [];  
-        let temaActual = 'noche';  
+    <script>
+        // ========== VARIABLES GLOBALES ==========
+        let deferredPrompt = null;
+        let tirosTotales = 3;
+        let tirosRestantes = 3;
+        let tirosAntesDelDisparo = 0;
+        let sorteoActivo = false;
+        let ultimaHeliceDisparada = null;
+        let intervaloSorteo = null;
+        let timerAutoReset = null;
+        let segundosRestantes = 0;
+        let indiceSecuencial = 0;
+        let helicesSecuencia = [];
+        let temaActual = 'noche';
 
-        let estadoHelices = {  
-            1: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },  
-            2: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },  
-            3: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },  
-            4: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },  
-            5: { encendida: false, excluida: false, eliminada: false, rpm: 2500 }  
-        };  
+        let estadoHelices = {
+            1: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },
+            2: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },
+            3: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },
+            4: { encendida: false, excluida: false, eliminada: false, rpm: 2500 },
+            5: { encendida: false, excluida: false, eliminada: false, rpm: 2500 }
+        };
 
-        let configuracionAudio = {  
-            comandoVoz: false,  
-            ganancia: 50  
-        };  
+        let configuracionAudio = {
+            comandoVoz: false,
+            ganancia: 50
+        };
 
-        // ========== PWA - INSTALACIÓN MEJORADA ==========  
-        window.addEventListener('beforeinstallprompt', (e) => {  
-            console.log('📱 PWA: Prompt de instalación disponible');  
-            e.preventDefault();  
-            deferredPrompt = e;  
-        });  
+        // ========== PWA INSTALACIÓN ==========
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('📱 PWA: Prompt de instalación disponible');
+            e.preventDefault();
+            deferredPrompt = e;
+        });
 
-        function instalarApp() {  
-            console.log('📱 Intentando instalar PWA...');  
+        function instalarApp() {
+            console.log('📱 Intentando instalar PWA...');
             
-            if (deferredPrompt) {  
-                deferredPrompt.prompt();  
-                deferredPrompt.userChoice.then((choiceResult) => {  
-                    if (choiceResult.outcome === 'accepted') {  
-                        console.log('✅ PWA instalada correctamente');  
-                        document.getElementById('installBanner').innerHTML = '🎉 ¡LHAZ instalada exitosamente!';  
-                        document.getElementById('installBanner').classList.add('instalada');  
-                        setTimeout(() => {  
-                            document.getElementById('installBanner').style.display = 'none';  
-                        }, 3000);  
-                        vibrarFeedback('sorteo');  
-                    }  
-                    deferredPrompt = null;  
-                });  
-            } else {  
-                mostrarInstruccionesInstalacion();  
-            }  
-        }  
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('✅ PWA instalada correctamente');
+                        document.getElementById('installBanner').innerHTML = '🎉 ¡LHAZ instalada exitosamente!';
+                        setTimeout(() => {
+                            document.getElementById('installBanner').style.display = 'none';
+                        }, 3000);
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                mostrarInstruccionesInstalacion();
+            }
+        }
 
-        function mostrarInstruccionesInstalacion() {  
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);  
-            const isAndroid = /Android/.test(navigator.userAgent);  
-            const isChrome = /Chrome/.test(navigator.userAgent);  
-            const isSafari = /Safari/.test(navigator.userAgent) && !isChrome;  
+        function mostrarInstruccionesInstalacion() {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            const isAndroid = /Android/.test(navigator.userAgent);
             
-            let instrucciones = '';  
+            let instrucciones = '';
+            if (isIOS) {
+                instrucciones = `📱 iOS: Toca el botón COMPARTIR 📤 → "Añadir a pantalla de inicio"`;
+            } else if (isAndroid) {
+                instrucciones = `📱 Android: Menú ⋮ → "Instalar aplicación"`;
+            } else {
+                instrucciones = `📱 Busca "Instalar" en el menú de tu navegador`;
+            }
             
-            if (isIOS && isSafari) {  
-                instrucciones = `📱 iOS: Toca el botón COMPARTIR 📤 → "Añadir a pantalla de inicio" → Confirmar ✅`;  
-            } else if (isAndroid && isChrome) {  
-                instrucciones = `📱 Android: Menú ⋮ → "Instalar aplicación" → Confirmar ✅`;  
-            } else {  
-                instrucciones = `📱 Busca el icono "Instalar" en tu navegador o usa el menú → "Instalar LHAZ"`;  
-            }  
-            
-            document.getElementById('estadoPrincipal').textContent = instrucciones;  
-            
-            setTimeout(() => {  
-                document.getElementById('estadoPrincipal').textContent = 'Sistema listo - Presiona SORTEAR para iniciar';  
-            }, 6000);  
-            
-            console.log('📱 Instrucciones mostradas');  
-        }  
+            document.getElementById('estadoPrincipal').textContent = instrucciones;
+            setTimeout(() => {
+                document.getElementById('estadoPrincipal').textContent = 'Sistema listo - Presiona SORTEAR';
+            }, 5000);
+        }
 
-        // ========== SERVICE WORKER ==========  
-        function registrarServiceWorker() {  
-            if ('serviceWorker' in navigator) {  
-                const swCode = `  
-                    const CACHE_NAME = 'lhaz-pwa-v1';  
-                    self.addEventListener('install', (event) => {  
-                        self.skipWaiting();  
-                    });  
-                    self.addEventListener('fetch', (event) => {  
-                        event.respondWith(  
-                            caches.match(event.request).then((response) => {  
-                                return response || fetch(event.request);  
-                            })  
-                        );  
-                    });  
-                `;  
+        // ========== SERVICE WORKER ==========
+        function registrarServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    const CACHE_NAME = 'lhaz-pwa-v1';
+                    self.addEventListener('install', (event) => {
+                        self.skipWaiting();
+                    });
+                    self.addEventListener('fetch', (event) => {
+                        event.respondWith(
+                            caches.match(event.request).then((response) => {
+                                return response || fetch(event.request);
+                            })
+                        );
+                    });
+                `;
                 
-                const blob = new Blob([swCode], { type: 'application/javascript' });  
-                const swURL = URL.createObjectURL(blob);  
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swURL = URL.createObjectURL(blob);
                 
-                navigator.serviceWorker.register(swURL)  
-                    .then(() => console.log('✅ Service Worker registrado'))  
-                    .catch(() => console.log('❌ Error Service Worker'));  
-            }  
-        }  
+                navigator.serviceWorker.register(swURL)
+                    .then(() => console.log('✅ Service Worker registrado'))
+                    .catch(() => console.log('❌ Error Service Worker'));
+            }
+        }
 
-        // ========== MANIFEST DINÁMICO ==========  
-        function crearManifest() {  
-            const manifest = {  
-                name: "LHAZ - Sistema Sorteo Hélices",  
-                short_name: "LHAZ",  
-                description: "Sistema profesional de sorteo de hélices para dispositivos móviles",  
-                start_url: "./",  
-                display: "standalone",  
-                background_color: "#000000",  
-                theme_color: "#FFD700",  
-                orientation: "portrait-primary",  
-                icons: [  
-                    {  
-                        src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiMwMDAwMDAiIHJ4PSIyNCIvPjx0ZXh0IHg9Ijk2IiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0ZGRDcwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TEhBWjwvdGV4dD48L3N2Zz4=",  
-                        sizes: "192x192",  
-                        type: "image/svg+xml"  
-                    },  
-                    {  
-                        src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiMwMDAwMDAiIHJ4PSI2NCIvPjx0ZXh0IHg9IjI1NiIgeT0iMjkwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMjgiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjRkZENzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5MSEFaPC90ZXh0Pjwvc3ZnPg==",  
-                        sizes: "512x512",  
-                        type: "image/svg+xml"  
-                    }  
-                ]  
-            };  
+        // ========== MANIFEST ==========
+        function crearManifest() {
+            const manifest = {
+                name: "LHAZ - Sistema Sorteo Hélices",
+                short_name: "LHAZ",
+                description: "Sistema profesional de sorteo de hélices",
+                start_url: "./",
+                display: "standalone",
+                background_color: "#000000",
+                theme_color: "#FFD700",
+                icons: [
+                    {
+                        src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiMwMDAwMDAiIHJ4PSIyNCIvPjx0ZXh0IHg9Ijk2IiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0ZGRDcwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TEhBWjwvdGV4dD48L3N2Zz4=",
+                        sizes: "192x192",
+                        type: "image/svg+xml"
+                    }
+                ]
+            };
             
-            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });  
-            const manifestURL = URL.createObjectURL(manifestBlob);  
-            document.getElementById('manifest-link').href = manifestURL;  
-        }  
+            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            document.getElementById('manifest-link').href = manifestURL;
+        }
 
-        // ========== TODAS LAS DEMÁS FUNCIONES (IGUALES QUE ANTES) ==========  
-        function toggleTema() {  
-            const body = document.body;  
-            const btnTema = document.getElementById('btnTema');  
+        // ========== FUNCIONES PRINCIPALES ==========
+        function toggleTema() {
+            const body = document.body;
+            const btnTema = document.getElementById('btnTema');
             
-            if (temaActual === 'noche') {  
-                body.classList.remove('tema-noche');  
-                body.classList.add('tema-dia');  
-                btnTema.textContent = '☀️';  
-                btnTema.title = 'Cambiar a Modo Noche';  
-                temaActual = 'dia';  
-                document.getElementById('estadoPrincipal').textContent = '☀️ MODO DÍA activado - Tema claro aplicado';  
-            } else {  
-                body.classList.remove('tema-dia');  
-                body.classList.add('tema-noche');  
-                btnTema.textContent = '🌙';  
-                btnTema.title = 'Cambiar a Modo Día';  
-                temaActual = 'noche';  
-                document.getElementById('estadoPrincipal').textContent = '🌙 MODO NOCHE activado - Tema oscuro aplicado';  
-            }  
+            if (temaActual === 'noche') {
+                body.classList.remove('tema-noche');
+                body.classList.add('tema-dia');
+                btnTema.textContent = '☀️';
+                temaActual = 'dia';
+                document.getElementById('estadoPrincipal').textContent = '☀️ MODO DÍA activado';
+            } else {
+                body.classList.remove('tema-dia');
+                body.classList.add('tema-noche');
+                btnTema.textContent = '🌙';
+                temaActual = 'noche';
+                document.getElementById('estadoPrincipal').textContent = '🌙 MODO NOCHE activado';
+            }
             
-            localStorage.setItem('tema-lhaz-pwa', temaActual);  
-            vibrarFeedback();  
-        }  
+            localStorage.setItem('tema-lhaz', temaActual);
+        }
 
-        function seleccionarTiros(cantidad) {  
-            if (sorteoActivo) return;  
-            tirosTotales = cantidad;  
-            tirosRestantes = cantidad;  
+        function seleccionarTiros(cantidad) {
+            if (sorteoActivo) return;
+            tirosTotales = cantidad;
+            tirosRestantes = cantidad;
             
-            document.querySelectorAll('.btn-tiro').forEach(btn => btn.classList.remove('activo'));  
-            event.target.classList.add('activo');  
+            document.querySelectorAll('.btn-tiro').forEach(btn => btn.classList.remove('activo'));
+            event.target.classList.add('activo');
             
-            document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
-            document.getElementById('estadoPrincipal').textContent = `Configuración: ${cantidad} tiros - Presiona SORTEAR`;  
-        }  
+            document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;
+            document.getElementById('estadoPrincipal').textContent = `Configuración: ${cantidad} tiros - Presiona SORTEAR`;
+        }
 
-        function iniciarSorteo() {  
-            if (sorteoActivo) return;  
+        function iniciarSorteo() {
+            if (sorteoActivo) return;
             
-            if (timerAutoReset) {  
-                clearInterval(timerAutoReset);  
-                timerAutoReset = null;  
-                segundosRestantes = 0;  
-                document.body.classList.remove('countdown-urgente');  
-            }  
+            if (timerAutoReset) {
+                clearInterval(timerAutoReset);
+                timerAutoReset = null;
+            }
             
-            helicesSecuencia = [];  
-            for (let i = 1; i <= 5; i++) {  
-                if (!estadoHelices[i].eliminada && !estadoHelices[i].excluida) {  
-                    helicesSecuencia.push(i);  
-                    estadoHelices[i].encendida = true;  
-                    actualizarHelice(i);  
-                    document.getElementById(`aspas${i}`).classList.add('girando');  
-                }  
-            }  
+            helicesSecuencia = [];
+            for (let i = 1; i <= 5; i++) {
+                if (!estadoHelices[i].eliminada && !estadoHelices[i].excluida) {
+                    helicesSecuencia.push(i);
+                    estadoHelices[i].encendida = true;
+                    actualizarHelice(i);
+                    document.getElementById(`aspas${i}`).classList.add('girando');
+                }
+            }
             
-            if (helicesSecuencia.length === 0) {  
-                document.getElementById('estadoPrincipal').textContent = 'No hay hélices disponibles - Usa RECUPERO o RESET';  
-                return;  
-            }  
+            if (helicesSecuencia.length === 0) {
+                document.getElementById('estadoPrincipal').textContent = 'No hay hélices disponibles - Usa RESET';
+                return;
+            }
             
-            sorteoActivo = true;  
-            indiceSecuencial = 0;  
+            sorteoActivo = true;
+            indiceSecuencial = 0;
             
-            document.getElementById('btnSortear').disabled = true;  
-            document.getElementById('indicadorSecuencia').classList.add('activo');  
+            document.getElementById('btnSortear').disabled = true;
+            document.getElementById('indicadorSecuencia').classList.add('activo');
             
-            iniciarSecuenciaCircular();  
-            document.getElementById('estadoPrincipal').textContent = `⚡ SORTEO ACTIVO - ${helicesSecuencia.length} hélices - Toca para EXCLUIR`;  
-            
-            vibrarFeedback('sorteo');  
-        }  
+            iniciarSecuenciaCircular();
+            document.getElementById('estadoPrincipal').textContent = `⚡ SORTEO ACTIVO - ${helicesSecuencia.length} hélices`;
+        }
 
-        function iniciarSecuenciaCircular() {  
-            intervaloSorteo = setInterval(() => {  
-                document.querySelectorAll('.helice-item').forEach(h => h.classList.remove('secuencia-actual'));  
+        function iniciarSecuenciaCircular() {
+            intervaloSorteo = setInterval(() => {
+                document.querySelectorAll('.helice-item').forEach(h => h.classList.remove('secuencia-actual'));
                 
-                const heliceActual = helicesSecuencia[indiceSecuencial];  
-                const heliceElement = document.querySelector(`[data-motor="${heliceActual}"]`);  
-                if (heliceElement && !estadoHelices[heliceActual].eliminada && !estadoHelices[heliceActual].excluida) {  
-                    heliceElement.classList.add('secuencia-actual');  
-                }  
+                const heliceActual = helicesSecuencia[indiceSecuencial];
+                const heliceElement = document.querySelector(`[data-motor="${heliceActual}"]`);
+                if (heliceElement && !estadoHelices[heliceActual].eliminada) {
+                    heliceElement.classList.add('secuencia-actual');
+                }
                 
-                indiceSecuencial = (indiceSecuencial + 1) % helicesSecuencia.length;  
+                indiceSecuencial = (indiceSecuencial + 1) % helicesSecuencia.length;
                 
-                const secuencia = helicesSecuencia.map((h, idx) =>   
-                    idx === (indiceSecuencial - 1 + helicesSecuencia.length) % helicesSecuencia.length ? `[${h}]` : h  
-                ).join(' → ');  
-                document.getElementById('secuenciaActual').textContent = secuencia;  
+                const secuencia = helicesSecuencia.map((h, idx) => 
+                    idx === (indiceSecuencial - 1 + helicesSecuencia.length) % helicesSecuencia.length ? `[${h}]` : h
+                ).join(' → ');
+                document.getElementById('secuenciaActual').textContent = secuencia;
                 
-            }, 200);  
+            }, 200);
             
-            setTimeout(() => {  
-                document.getElementById('btnDisparar').disabled = false;  
-                document.getElementById('btnDisparar').classList.add('listo');  
-            }, 1000);  
-        }  
+            setTimeout(() => {
+                document.getElementById('btnDisparar').disabled = false;
+                document.getElementById('btnDisparar').classList.add('listo');
+            }, 1000);
+        }
 
-        function ejecutarDisparo() {  
-            if (!sorteoActivo) return;  
+        function ejecutarDisparo() {
+            if (!sorteoActivo) return;
             
-            clearInterval(intervaloSorteo);  
-            sorteoActivo = false;  
+            clearInterval(intervaloSorteo);
+            sorteoActivo = false;
             
-            const heliceSeleccionada = document.querySelector('.secuencia-actual');  
-            if (!heliceSeleccionada) {  
-                document.getElementById('estadoPrincipal').textContent = '❌ Error: No hay hélice seleccionada';  
-                return;  
-            }  
+            const heliceSeleccionada = document.querySelector('.secuencia-actual');
+            if (!heliceSeleccionada) return;
             
-            const motor = parseInt(heliceSeleccionada.getAttribute('data-motor'));  
-            tirosAntesDelDisparo = tirosRestantes;  
+            const motor = parseInt(heliceSeleccionada.getAttribute('data-motor'));
+            tirosAntesDelDisparo = tirosRestantes;
             
-            document.getElementById('btnDisparar').disabled = true;  
-            document.getElementById('btnDisparar').classList.remove('listo');  
+            document.getElementById('btnDisparar').disabled = true;
+            document.getElementById('btnDisparar').classList.remove('listo');
             
-            document.querySelectorAll('.helice-item').forEach(h => h.classList.remove('secuencia-actual'));  
-            heliceSeleccionada.classList.add('disparando');  
+            document.querySelectorAll('.helice-item').forEach(h => h.classList.remove('secuencia-actual'));
+            heliceSeleccionada.classList.add('disparando');
             
-            for (let i = 1; i <= 5; i++) {  
-                document.getElementById(`aspas${i}`).classList.remove('girando');  
-            }  
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`aspas${i}`).classList.remove('girando');
+            }
             
-            document.getElementById('indicadorSecuencia').classList.remove('activo');  
-            document.getElementById('estadoPrincipal').textContent = `💥 HÉLICE ${motor} DISPARADA - Procesando...`;  
+            document.getElementById('indicadorSecuencia').classList.remove('activo');
+            document.getElementById('estadoPrincipal').textContent = `💥 HÉLICE ${motor} DISPARADA`;
             
-            vibrarFeedback('disparo');  
-            
-            setTimeout(() => {  
-                estadoHelices[motor].eliminada = true;  
-                estadoHelices[motor].encendida = false;  
-                estadoHelices[motor].excluida = false;  
-                ultimaHeliceDisparada = motor;  
+            setTimeout(() => {
+                estadoHelices[motor].eliminada = true;
+                estadoHelices[motor].encendida = false;
+                ultimaHeliceDisparada = motor;
                 
-                heliceSeleccionada.classList.remove('disparando');  
-                actualizarHelice(motor);  
+                heliceSeleccionada.classList.remove('disparando');
+                actualizarHelice(motor);
                 
-                tirosRestantes--;  
-                document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
-                document.getElementById('textoUltima').textContent = `Última hélice disparada: ${motor} - RECUPERO disponible`;  
+                tirosRestantes--;
+                document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;
+                document.getElementById('textoUltima').textContent = `Última hélice disparada: ${motor}`;
+                document.getElementById('btnRecupero').disabled = false;
                 
-                const infoElement = document.getElementById('infoUltima');  
-                const btnRecupero = document.getElementById('btnRecupero');  
-                infoElement.classList.add('disponible');  
-                btnRecupero.disabled = false;  
-                btnRecupero.classList.add('disponible');  
+                const helicesDisponibles = helicesSecuencia.filter(h => !estadoHelices[h].eliminada).length - 1;
                 
-                const helicesDisponibles = helicesSecuencia.filter(h => !estadoHelices[h].eliminada).length - 1;  
+                if (tirosRestantes <= 0 || helicesDisponibles === 0) {
+                    document.getElementById('estadoPrincipal').textContent = `🏁 JUEGO TERMINADO - Auto-reset en 10s`;
+                    document.getElementById('btnSortear').disabled = true;
+                    iniciarAutoReset(10);
+                } else {
+                    document.getElementById('estadoPrincipal').textContent = `✅ Hélice ${motor} eliminada`;
+                    document.getElementById('btnSortear').disabled = false;
+                }
                 
-                if (tirosRestantes <= 0) {  
-                    document.getElementById('estadoPrincipal').textContent = `🏁 JUEGO TERMINADO - Auto-reset en 10s`;  
-                    document.getElementById('btnSortear').disabled = true;  
-                    iniciarAutoReset(10);  
-                } else if (helicesDisponibles === 0) {  
-                    document.getElementById('estadoPrincipal').textContent = `🏁 NO QUEDAN HÉLICES - Auto-reset en 10s`;  
-                    document.getElementById('btnSortear').disabled = true;  
-                    iniciarAutoReset(10);  
-                } else {  
-                    const tiroActual = tirosTotales - tirosRestantes + 1;  
-                    document.getElementById('estadoPrincipal').textContent = `✅ Hélice ${motor} eliminada - ${helicesDisponibles} disponibles`;  
-                    document.getElementById('btnSortear').disabled = false;  
-                }  
-                
-                helicesSecuencia = [];  
-            }, 1500);  
-        }  
+                helicesSecuencia = [];
+            }, 1500);
+        }
 
-        function recuperarHelice() {  
-            if (!ultimaHeliceDisparada || sorteoActivo) return;  
+        function recuperarHelice() {
+            if (!ultimaHeliceDisparada || sorteoActivo) return;
             
-            if (timerAutoReset) {  
-                clearInterval(timerAutoReset);  
-                timerAutoReset = null;  
-                segundosRestantes = 0;  
-                document.body.classList.remove('countdown-urgente');  
-            }  
+            if (timerAutoReset) {
+                clearInterval(timerAutoReset);
+                timerAutoReset = null;
+            }
             
-            const motor = ultimaHeliceDisparada;  
+            const motor = ultimaHeliceDisparada;
             
-            estadoHelices[motor].eliminada = false;  
-            estadoHelices[motor].excluida = false;  
-            estadoHelices[motor].encendida = false;  
+            estadoHelices[motor].eliminada = false;
+            estadoHelices[motor].encendida = false;
             
-            const heliceElement = document.querySelector(`[data-motor="${motor}"]`);  
-            if (heliceElement) {  
-                heliceElement.classList.add('recuperando');  
-                setTimeout(() => {  
-                    heliceElement.classList.remove('recuperando');  
-                    actualizarHelice(motor);  
-                }, 1000);  
-            }  
+            const heliceElement = document.querySelector(`[data-motor="${motor}"]`);
+            if (heliceElement) {
+                heliceElement.classList.add('recuperando');
+                setTimeout(() => {
+                    heliceElement.classList.remove('recuperando');
+                    actualizarHelice(motor);
+                }, 1000);
+            }
             
-            tirosRestantes = tirosAntesDelDisparo;  
+            tirosRestantes = tirosAntesDelDisparo;
+            document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;
+            document.getElementById('btnSortear').disabled = false;
+            document.getElementById('estadoPrincipal').textContent = `🔧 Hélice ${motor} RECUPERADA`;
             
-            document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
-            document.getElementById('btnSortear').disabled = false;  
-            
-            if (tirosRestantes <= 0) {  
-                tirosRestantes = 1;  
-                document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
-                document.getElementById('estadoPrincipal').textContent = `🔧 Hélice ${motor} RECUPERADA - Última oportunidad`;  
-            } else {  
-                document.getElementById('estadoPrincipal').textContent = `🔧 Hélice ${motor} RECUPERADA - Continúa el juego`;  
-            }  
-            
-            ultimaHeliceDisparada = null;  
-            document.getElementById('textoUltima').textContent = 'Última hélice disparada: Ninguna';  
-            document.getElementById('infoUltima').classList.remove('disponible');  
-            document.getElementById('btnRecupero').disabled = true;  
-            document.getElementById('btnRecupero').classList.remove('disponible');  
-            
-            vibrarFeedback('recupero');  
-        }  
+            ultimaHeliceDisparada = null;
+            document.getElementById('textoUltima').textContent = 'Última hélice disparada: Ninguna';
+            document.getElementById('btnRecupero').disabled = true;
+        }
 
-        function clickHelice(motor) {  
-            if (sorteoActivo) {  
-                toggleExclusionEnSorteo(motor);  
-            } else {  
-                toggleHeliceManual(motor);  
-            }  
-            vibrarFeedback();  
-        }  
+        function clickHelice(motor) {
+            if (sorteoActivo) {
+                toggleExclusionEnSorteo(motor);
+            } else {
+                toggleHeliceManual(motor);
+            }
+        }
 
-        function toggleExclusionEnSorteo(motor) {  
-            if (estadoHelices[motor].eliminada) {  
-                document.getElementById('estadoPrincipal').textContent = `❌ Hélice ${motor} está ELIMINADA - Usa RECUPERO`;  
-                return;  
-            }  
+        function toggleExclusionEnSorteo(motor) {
+            if (estadoHelices[motor].eliminada) return;
             
-            const heliceElement = document.querySelector(`[data-motor="${motor}"]`);  
-            const aspasElement = document.getElementById(`aspas${motor}`);  
+            const heliceElement = document.querySelector(`[data-motor="${motor}"]`);
+            const aspasElement = document.getElementById(`aspas${motor}`);
             
-            if (!estadoHelices[motor].excluida) {  
-                estadoHelices[motor].excluida = true;  
-                estadoHelices[motor].encendida = false;  
-                
-                helicesSecuencia = helicesSecuencia.filter(h => h !== motor);  
-                
-                if (aspasElement) aspasElement.classList.remove('girando');  
-                if (heliceElement) {  
-                    heliceElement.classList.remove('encendida', 'secuencia-actual');  
-                    heliceElement.classList.add('excluida');  
-                }  
-                
-                document.getElementById('estadoPrincipal').textContent = `⚠️ Hélice ${motor} EXCLUIDA - ${helicesSecuencia.length} participando`;  
-                
-            } else {  
-                estadoHelices[motor].excluida = false;  
-                estadoHelices[motor].encendida = true;  
-                
-                helicesSecuencia.push(motor);  
-                helicesSecuencia.sort((a, b) => a - b);  
-                
-                if (aspasElement) aspasElement.classList.add('girando');  
-                if (heliceElement) {  
-                    heliceElement.classList.remove('excluida');  
-                    heliceElement.classList.add('encendida');  
-                }  
-                
-                document.getElementById('estadoPrincipal').textContent = `✅ Hélice ${motor} INCLUIDA - ${helicesSecuencia.length} participando`;  
-            }  
+            if (!estadoHelices[motor].excluida) {
+                estadoHelices[motor].excluida = true;
+                estadoHelices[motor].encendida = false;
+                helicesSecuencia = helicesSecuencia.filter(h => h !== motor);
+                if (aspasElement) aspasElement.classList.remove('girando');
+            } else {
+                estadoHelices[motor].excluida = false;
+                estadoHelices[motor].encendida = true;
+                helicesSecuencia.push(motor);
+                helicesSecuencia.sort((a, b) => a - b);
+                if (aspasElement) aspasElement.classList.add('girando');
+            }
             
-            actualizarHelice(motor);  
-            
-            if (helicesSecuencia.length === 0) {  
-                sorteoActivo = false;  
-                clearInterval(intervaloSorteo);  
-                document.getElementById('indicadorSecuencia').classList.remove('activo');  
-                document.getElementById('btnDisparar').disabled = true;  
-                document.getElementById('btnDisparar').classList.remove('listo');  
-                document.getElementById('btnSortear').disabled = false;  
-                document.getElementById('estadoPrincipal').textContent = '❌ No quedan hélices - Incluye al menos una';  
-            }  
-        }  
+            actualizarHelice(motor);
+        }
 
-        function toggleHeliceManual(motor) {  
-            if (estadoHelices[motor].eliminada) return;  
+        function toggleHeliceManual(motor) {
+            if (estadoHelices[motor].eliminada) return;
             
-            estadoHelices[motor].encendida = !estadoHelices[motor].encendida;  
-            actualizarHelice(motor);  
+            estadoHelices[motor].encendida = !estadoHelices[motor].encendida;
+            actualizarHelice(motor);
             
-            const aspasElement = document.getElementById(`aspas${motor}`);  
-            if (aspasElement) {  
-                if (estadoHelices[motor].encendida) {  
-                    aspasElement.classList.add('girando');  
-                } else {  
-                    aspasElement.classList.remove('girando');  
-                }  
-            }  
-            
-            const estado = estadoHelices[motor].encendida ? 'encendida' : 'apagada';  
-            document.getElementById('estadoPrincipal').textContent = `Hélice ${motor} ${estado} manualmente`;  
-        }  
+            const aspasElement = document.getElementById(`aspas${motor}`);
+            if (aspasElement) {
+                if (estadoHelices[motor].encendida) {
+                    aspasElement.classList.add('girando');
+                } else {
+                    aspasElement.classList.remove('girando');
+                }
+            }
+        }
 
-        function iniciarAutoReset(segundos) {  
-            segundosRestantes = segundos;  
+        function iniciarAutoReset(segundos) {
+            segundosRestantes = segundos;
             
-            timerAutoReset = setInterval(() => {  
-                segundosRestantes--;  
+            timerAutoReset = setInterval(() => {
+                segundosRestantes--;
+                document.getElementById('estadoPrincipal').textContent = `⏰ Auto-reset en ${segundosRestantes}s`;
                 
-                if (segundosRestantes <= 3) {  
-                    document.body.classList.add('countdown-urgente');  
-                    vibrarFeedback('error');  
-                }  
-                
-                document.getElementById('estadoPrincipal').textContent = `⏰ Auto-reset en ${segundosRestantes}s`;  
-                
-                if (segundosRestantes <= 0) {  
-                    clearInterval(timerAutoReset);  
-                    timerAutoReset = null;  
-                    resetearTodo();  
-                }  
-            }, 1000);  
-        }  
+                if (segundosRestantes <= 0) {
+                    clearInterval(timerAutoReset);
+                    timerAutoReset = null;
+                    resetearTodo();
+                }
+            }, 1000);
+        }
 
-        function resetearTodo() {  
-            if (intervaloSorteo) {  
-                clearInterval(intervaloSorteo);  
-                intervaloSorteo = null;  
-            }  
-            if (timerAutoReset) {  
-                clearInterval(timerAutoReset);  
-                timerAutoReset = null;  
-                segundosRestantes = 0;  
-            }  
+        function resetearTodo() {
+            if (intervaloSorteo) {
+                clearInterval(intervaloSorteo);
+                intervaloSorteo = null;
+            }
+            if (timerAutoReset) {
+                clearInterval(timerAutoReset);
+                timerAutoReset = null;
+            }
             
-            document.body.classList.remove('countdown-urgente');  
-            document.querySelectorAll('.helice-item').forEach(h => {  
-                h.classList.remove('secuencia-actual', 'disparando', 'recuperando');  
-            });  
+            document.querySelectorAll('.helice-item').forEach(h => {
+                h.classList.remove('secuencia-actual', 'disparando', 'recuperando');
+            });
             
-            sorteoActivo = false;  
-            ultimaHeliceDisparada = null;  
-            tirosAntesDelDisparo = 0;  
-            tirosRestantes = tirosTotales;  
-            helicesSecuencia = [];  
+            sorteoActivo = false;
+            ultimaHeliceDisparada = null;
+            tirosRestantes = tirosTotales;
+            helicesSecuencia = [];
             
-            for (let i = 1; i <= 5; i++) {  
-                estadoHelices[i] = { encendida: false, excluida: false, eliminada: false, rpm: estadoHelices[i].rpm };  
-                actualizarHelice(i);  
-                document.getElementById(`aspas${i}`).classList.remove('girando');  
-            }  
+            for (let i = 1; i <= 5; i++) {
+                estadoHelices[i] = { encendida: false, excluida: false, eliminada: false, rpm: estadoHelices[i].rpm };
+                actualizarHelice(i);
+                document.getElementById(`aspas${i}`).classList.remove('girando');
+            }
             
-            document.getElementById('btnSortear').disabled = false;  
-            document.getElementById('btnDisparar').disabled = true;  
-            document.getElementById('btnDisparar').classList.remove('listo');  
-            document.getElementById('btnRecupero').disabled = true;  
-            document.getElementById('btnRecupero').classList.remove('disponible');  
-            document.getElementById('indicadorSecuencia').classList.remove('activo');  
-            document.getElementById('infoUltima').classList.remove('disponible');  
+            document.getElementById('btnSortear').disabled = false;
+            document.getElementById('btnDisparar').disabled = true;
+            document.getElementById('btnDisparar').classList.remove('listo');
+            document.getElementById('btnRecupero').disabled = true;
+            document.getElementById('indicadorSecuencia').classList.remove('activo');
             
-            document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;  
-            document.getElementById('textoUltima').textContent = 'Última hélice disparada: Ninguna';  
-            document.getElementById('estadoPrincipal').textContent = `🔄 SISTEMA RESETEADO - Presiona SORTEAR`;  
-            
-            vibrarFeedback('reset');  
-        }  
+            document.getElementById('tirosRestantes').textContent = `Tiros Restantes: ${tirosRestantes}`;
+            document.getElementById('textoUltima').textContent = 'Última hélice disparada: Ninguna';
+            document.getElementById('estadoPrincipal').textContent = `🔄 SISTEMA RESETEADO - Presiona SORTEAR`;
+        }
 
-        function actualizarHelice(motor) {  
-            const helice = document.querySelector(`[data-motor="${motor}"]`);  
-            const rpm = document.getElementById(`rpm${motor}`);  
+        function actualizarHelice(motor) {
+            const helice = document.querySelector(`[data-motor="${motor}"]`);
+            const rpm = document.getElementById(`rpm${motor}`);
             
-            if (!helice) return;  
+            if (!helice) return;
             
-            helice.classList.remove('inicial', 'encendida', 'excluida', 'eliminada');  
+            helice.classList.remove('inicial', 'encendida', 'excluida', 'eliminada');
             
-            if (estadoHelices[motor].eliminada) {  
-                helice.classList.add('eliminada');  
-                if (rpm) rpm.textContent = 'ELIM';  
-            } else if (estadoHelices[motor].excluida) {  
-                helice.classList.add('excluida');  
-                if (rpm) rpm.textContent = 'EXCL';  
-            } else if (estadoHelices[motor].encendida) {  
-                helice.classList.add('encendida');  
-                if (rpm) rpm.textContent = `${estadoHelices[motor].rpm}`;  
-            } else {  
-                helice.classList.add('inicial');  
-                if (rpm) rpm.textContent = 'RPM: 0';  
-            }  
-        }  
+            if (estadoHelices[motor].eliminada) {
+                helice.classList.add('eliminada');
+                if (rpm) rpm.textContent = 'ELIM';
+            } else if (estadoHelices[motor].excluida) {
+                helice.classList.add('excluida');
+                if (rpm) rpm.textContent = 'EXCL';
+            } else if (estadoHelices[motor].encendida) {
+                helice.classList.add('encendida');
+                if (rpm) rpm.textContent = `${estadoHelices[motor].rpm}`;
+            } else {
+                helice.classList.add('inicial');
+                if (rpm) rpm.textContent = 'RPM: 0';
+            }
+        }
 
-        // ========== PANELES Y CONTROLES ==========  
-        function abrirPanelRPM() {  
-            document.getElementById('overlay').classList.add('activo');  
-            document.getElementById('panelRPM').classList.add('activo');  
-        }  
+        // ========== PANELES ==========
+        function abrirPanelRPM() {
+            document.getElementById('overlay').classList.add('activo');
+            document.getElementById('panelRPM').classList.add('activo');
+        }
 
-        function cerrarPanelRPM() {  
-            document.getElementById('overlay').classList.remove('activo');  
-            document.getElementById('panelRPM').classList.remove('activo');  
-        }  
+        function cerrarPanelRPM() {
+            document.getElementById('overlay').classList.remove('activo');
+            document.getElementById('panelRPM').classList.remove('activo');
+        }
 
-        function cambiarRPM(motor, valor) {  
-            estadoHelices[motor].rpm = parseInt(valor);  
-            document.getElementById(`valorRPM${motor}`).textContent = valor;  
+        function cambiarRPM(motor, valor) {
+            estadoHelices[motor].rpm = parseInt(valor);
+            document.getElementById(`valorRPM${motor}`).textContent = valor;
             
-            if (estadoHelices[motor].encendida) {  
-                                document.getElementById(`rpm${motor}`).textContent = valor;
+            if (estadoHelices[motor].encendida) {
+                document.getElementById(`rpm${motor}`).textContent = valor;
             }
         }
 
@@ -1260,53 +1093,11 @@
             const btn = document.getElementById('btnComandoVoz');
             btn.textContent = configuracionAudio.comandoVoz ? 'Activado' : 'Desactivado';
             btn.classList.toggle('activo', configuracionAudio.comandoVoz);
-            
-            if (configuracionAudio.comandoVoz) {
-                iniciarReconocimientoVoz();
-            } else {
-                detenerReconocimientoVoz();
-            }
         }
 
         function cambiarGanancia(valor) {
             configuracionAudio.ganancia = parseInt(valor);
             document.getElementById('valorGanancia').textContent = `${valor}%`;
-        }
-
-        function iniciarReconocimientoVoz() {
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                const recognition = new SpeechRecognition();
-                
-                recognition.continuous = true;
-                recognition.lang = 'es-ES';
-                recognition.interimResults = false;
-                
-                recognition.onresult = function(event) {
-                    const command = event.results[event.results.length - 1][0].transcript.toLowerCase();
-                    
-                    if (command.includes('disparar') && !document.getElementById('btnDisparar').disabled) {
-                        ejecutarDisparo();
-                        document.getElementById('estadoPrincipal').textContent = '🎤 Comando "DISPARAR" ejecutado';
-                    } else if (command.includes('sortear') && !document.getElementById('btnSortear').disabled) {
-                        iniciarSorteo();
-                        document.getElementById('estadoPrincipal').textContent = '🎤 Comando "SORTEAR" ejecutado';
-                    } else if (command.includes('reset')) {
-                        resetearTodo();
-                        document.getElementById('estadoPrincipal').textContent = '🎤 Comando "RESET" ejecutado';
-                    }
-                };
-                
-                recognition.start();
-                window.currentRecognition = recognition;
-            }
-        }
-
-        function detenerReconocimientoVoz() {
-            if (window.currentRecognition) {
-                window.currentRecognition.stop();
-                window.currentRecognition = null;
-            }
         }
 
         function cerrarPaneles() {
@@ -1315,118 +1106,29 @@
             document.getElementById('panelAudio').classList.remove('activo');
         }
 
-        function vibrarFeedback(tipo = 'normal') {
-            if (!('vibrate' in navigator)) return;
-            
-            switch (tipo) {
-                case 'disparo':
-                    navigator.vibrate([200, 100, 200, 100, 300]);
-                    break;
-                case 'sorteo':
-                    navigator.vibrate([100, 50, 100]);
-                    break;
-                case 'reset':
-                    navigator.vibrate([150, 100, 150]);
-                    break;
-                case 'error':
-                    navigator.vibrate([300, 100, 300]);
-                    break;
-                case 'recupero':
-                    navigator.vibrate([100, 50, 100, 50, 100]);
-                    break;
-                default:
-                    navigator.vibrate([100]);
-            }
-        }
-
-        function cargarTemaGuardado() {
-            const temaGuardado = localStorage.getItem('tema-lhaz-pwa');
-            if (temaGuardado && temaGuardado !== temaActual) {
-                toggleTema();
-            }
-        }
-
-        // ========== INICIALIZACIÓN PWA COMPLETA ==========
+        // ========== INICIALIZACIÓN ==========
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚁 LHAZ PWA - Iniciando aplicación móvil...');
+            console.log('🚁 LHAZ PWA - Iniciando...');
             
-            // Crear manifest y service worker
             crearManifest();
             registrarServiceWorker();
             
-            // Cargar configuraciones
-            cargarTemaGuardado();
+            const temaGuardado = localStorage.getItem('tema-lhaz');
+            if (temaGuardado && temaGuardado !== temaActual) {
+                toggleTema();
+            }
             
-            // Inicializar hélices
             for (let i = 1; i <= 5; i++) {
                 actualizarHelice(i);
             }
             
-            // Mostrar banner de instalación después de 1 segundo
-            setTimeout(() => {
-                document.getElementById('installBanner').style.display = 'block';
-                console.log('📱 Banner de instalación mostrado');
-            }, 1000);
-            
-            // Detectar si ya está instalada como PWA
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-                               window.navigator.standalone === true;
-            
-            if (isStandalone) {
-                console.log('✅ PWA ya instalada como aplicación');
-                document.getElementById('installBanner').innerHTML = '✅ ¡LHAZ ya instalada como app!';
-                document.getElementById('installBanner').classList.add('instalada');
-                setTimeout(() => {
-                    document.getElementById('installBanner').style.display = 'none';
-                }, 3000);
-            }
-            
-            // Prevenir zoom en dispositivos móviles
-            document.addEventListener('touchstart', function(event) {
-                if (event.touches.length > 1) {
-                    event.preventDefault();
-                }
-            }, { passive: false });
-            
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) {
-                const now = (new Date()).getTime();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, false);
-            
-            // Prevenir scroll global pero permitir en paneles
-            document.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-            }, { passive: false });
-            
-            document.getElementById('panelRPM').addEventListener('touchmove', function(e) {
-                e.stopPropagation();
-            });
-            
-            document.getElementById('panelAudio').addEventListener('touchmove', function(e) {
-                e.stopPropagation();
-            });
-            
-            console.log('✅ LHAZ PWA - Inicialización completa');
-            console.log('📱 Para instalar: Toca el banner dorado o usa el menú del navegador');
+            console.log('✅ LHAZ PWA - Listo');
         });
 
-        // ========== EVENTOS PWA FINALES ==========
         window.addEventListener('appinstalled', () => {
-            console.log('🎉 PWA: Aplicación instalada exitosamente');
+            console.log('🎉 PWA instalada');
             document.getElementById('installBanner').style.display = 'none';
-            document.getElementById('estadoPrincipal').textContent = '🎉 ¡LHAZ instalada como app nativa!';
-            vibrarFeedback('sorteo');
         });
-
     </script>
 </body>
 </html>
-
-
-
-
-
